@@ -1,29 +1,40 @@
 package com.maciej.poreba.backend.authservice.client;
 
 import com.maciej.poreba.backend.authservice.model.facebook.FacebookUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
+@RequiredArgsConstructor
 public class FacebookClient {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final WebClient webClient;
 
-    private final String FACEBOOK_GRAPH_API_BASE = "https://graph.facebook.com";
+    private static final String FACEBOOK_GRAPH_API_BASE = "https://graph.facebook.com";
 
     public FacebookUser getUser(String accessToken) {
-        var path = "/me?fields={fields}&redirect={redirect}&access_token={access_token}";
-        var fields = "email,first_name,last_name,id,picture.width(720).height(720)";
-        final Map<String, String> variables = new HashMap   <>();
-        variables.put("fields", fields);
-        variables.put("redirect", "false");
-        variables.put("access_token", accessToken);
-        return restTemplate
-                .getForObject(FACEBOOK_GRAPH_API_BASE + path, FacebookUser.class, variables);
+        String fields = "email,first_name,last_name,id,picture.width(720).height(720)";
+        String uri = FACEBOOK_GRAPH_API_BASE + UriComponentsBuilder
+                .fromPath("/me")
+                .queryParam("fields", fields)
+                .queryParam("redirect", "false")
+                .queryParam("access_token", accessToken)
+                .build()
+                .toUriString();
+
+        return webClient.get()
+                .uri(uri)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve()
+                .bodyToMono(FacebookUser.class)
+                .block();
+
+
     }
+
+
 }

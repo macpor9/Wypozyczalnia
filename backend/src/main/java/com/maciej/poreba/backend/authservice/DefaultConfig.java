@@ -2,7 +2,7 @@ package com.maciej.poreba.backend.authservice;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Random;
 
@@ -10,7 +10,9 @@ import java.util.Random;
 public class DefaultConfig {
 
     @Bean
-    public RestTemplate restTemplate(){return new RestTemplate();}
+    public WebClient webClient() {
+        return WebClient.create();
+    }
 
     @Bean
     public Random random(){return new Random();}
