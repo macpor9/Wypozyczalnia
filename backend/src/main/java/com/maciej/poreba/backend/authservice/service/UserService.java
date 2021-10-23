@@ -24,10 +24,10 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class UserService {
 
-    private PasswordEncoder passwordEncoder;
-    private UserRepository userRepository;
-    private AuthenticationManager authenticationManager;
-    private JwtTokenProvider tokenProvider;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider tokenProvider;
 
 
     public String loginUser(String username, String password) {

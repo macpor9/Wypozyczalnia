@@ -14,7 +14,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -22,7 +21,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Document(collection = "user")
 public class User {
 
     public User(User user) {
@@ -30,8 +29,8 @@ public class User {
         this.username = user.username;
         this.password = user.password;
         this.email = user.email;
-        this.createdAt = user.getCreatedAt();
-        this.updatedAt = user.getUpdatedAt();
+        this.createdAt = user.createdAt;
+        this.updatedAt = user.updatedAt;
         this.active = user.active;
         this.userProfile = user.userProfile;
         this.roles = user.roles;

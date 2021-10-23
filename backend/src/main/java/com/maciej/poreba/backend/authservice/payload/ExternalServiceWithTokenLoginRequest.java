@@ -12,7 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FacebookLoginRequest implements Serializable {
+public class ExternalServiceWithTokenLoginRequest implements Serializable {
 
     @NotBlank
     private String accessToken;

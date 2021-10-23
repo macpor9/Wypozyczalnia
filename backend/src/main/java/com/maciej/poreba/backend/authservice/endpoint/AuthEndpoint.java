@@ -9,9 +9,10 @@ import com.maciej.poreba.backend.authservice.model.Role;
 import com.maciej.poreba.backend.authservice.model.User;
 import com.maciej.poreba.backend.authservice.payload.*;
 import com.maciej.poreba.backend.authservice.service.FacebookService;
+import com.maciej.poreba.backend.authservice.service.GoogleService;
 import com.maciej.poreba.backend.authservice.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,10 +25,12 @@ import java.net.URI;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 public class AuthEndpoint {
 
-    @Autowired private UserService userService;
-    @Autowired private FacebookService facebookService;
+    private final UserService userService;
+    private final FacebookService facebookService;
+    private final GoogleService googleService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -36,9 +39,16 @@ public class AuthEndpoint {
     }
 
     @PostMapping("/facebook/signin")
-    public  ResponseEntity<?> facebookAuth(@Valid @RequestBody FacebookLoginRequest facebookLoginRequest) {
+    public ResponseEntity<?> facebookAuth(@Valid @RequestBody ExternalServiceWithTokenLoginRequest facebookLoginRequest) {
         log.info("facebook login {}", facebookLoginRequest);
         String token = facebookService.loginUser(facebookLoginRequest.getAccessToken());
+        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+    }
+
+    @PostMapping("/google/signin")
+    public ResponseEntity<?> googleAuth(@Valid @RequestBody ExternalServiceWithTokenLoginRequest googleLoginRequest) {
+        log.info("google login {}", googleLoginRequest);
+        String token = googleService.loginUser(googleLoginRequest.getAccessToken());
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
 

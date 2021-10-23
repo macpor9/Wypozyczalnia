@@ -1,7 +1,11 @@
 spring:
   data:
     mongodb:
-      database: instaclone_auth
+      uri: mongodb://localhost:27017/test
+#      host: localhost
+#      port: 27017
+#      database: test
+#      uri: mongodb://localhost:27017
 
 server:
   port: 8081
