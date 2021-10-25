@@ -30,7 +30,7 @@ public class FacebookService {
     public String loginUser(String fbAccessToken) {
         var facebookUser = facebookClient.getUser(fbAccessToken);
 
-        return userService.findById(facebookUser.getId())
+        return userService.findByEmail(facebookUser.getEmail())
                 .or(() -> Optional.ofNullable(userService.registerUser(convertTo(facebookUser), Role.FACEBOOK_USER)))
                 .map(InstaUserDetails::new)
                 .map(userDetails -> new UsernamePasswordAuthenticationToken(
