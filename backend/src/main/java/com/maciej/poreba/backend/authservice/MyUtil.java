@@ -1,13 +1,10 @@
 package com.maciej.poreba.backend.authservice;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Random;
 
 public class MyUtil {
 
-    @Autowired
-    private static Random random;
+    private static Random random = new Random();
 
     public static String generateUsername(String firstName, String lastName) {
         int number = random.nextInt(999999);
