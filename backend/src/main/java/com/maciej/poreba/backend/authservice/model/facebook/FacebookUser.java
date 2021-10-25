@@ -1,6 +1,7 @@
 package com.maciej.poreba.backend.authservice.model.facebook;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.maciej.poreba.backend.authservice.model.facebook.dto.FacebookPicture;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

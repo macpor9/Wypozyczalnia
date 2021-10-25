@@ -31,7 +31,7 @@ public class GoogleService {
     public String loginUser(String fbAccessToken) {
         GoogleUser googleUser = googleClient.getUser(fbAccessToken);
 
-        return userService.findById(googleUser.getId())
+        return userService.findByEmail(googleUser.getEmailAddresses().get(0).getEmail())
                 .or(() -> Optional.ofNullable(userService.registerUser(convertTo(googleUser), Role.GOOGLE_USER)))
                 .map(InstaUserDetails::new)
                 .map(userDetails -> new UsernamePasswordAuthenticationToken(
@@ -44,12 +44,12 @@ public class GoogleService {
     private User convertTo(GoogleUser googleUser) {
         return User.builder()
                 .id(googleUser.getId())
-                .email(googleUser.getEmail())
-                .username(generateUsername(googleUser.getFirstName(), googleUser.getLastName()))
+                .email(googleUser.getEmailAddresses().get(0).getEmail())
+                .username(generateUsername(googleUser.getNames().get(0).getFirstName(), googleUser.getNames().get(0).getLastName()))
                 .password(MyUtil.generatePassword(8))
                 .userProfile(Profile.builder()
                         .displayName(String
-                                .format("%s %s", googleUser.getFirstName(), googleUser.getLastName()))
+                                .format("%s %s", googleUser.getNames().get(0).getFirstName(), googleUser.getNames().get(0).getLastName()))
                         .build())
                 .build();
     }

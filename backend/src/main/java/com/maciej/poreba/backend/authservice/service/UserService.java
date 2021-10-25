@@ -7,14 +7,12 @@ import com.maciej.poreba.backend.authservice.model.User;
 import com.maciej.poreba.backend.authservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -73,5 +71,10 @@ public class UserService {
     public Optional<User> findById(String id) {
         log.info("retrieving user {}", id);
         return userRepository.findById(id);
+    }
+
+    public Optional<User> findByEmail(String email) {
+        log.info("retrieving user {}", email);
+        return userRepository.findByEmail(email);
     }
 }

@@ -1,4 +1,4 @@
-package com.maciej.poreba.backend.authservice.model.facebook;
+package com.maciej.poreba.backend.authservice.model.facebook.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
