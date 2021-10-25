@@ -33,7 +33,10 @@ export class LoginComponent implements OnInit {
 
   loginWithFacebook(): void {
     this.authService.facebookLogin();
+  }
 
+  loginWithGoogle(): void {
+    this.authService.googleLogin();
   }
 
   signOut(): void {

@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8081',
-  facebookAppId: '303682664612585'
+  facebookAppId: '303682664612585',
+  googleAppId: '101252891127-o73t3if010k7k7cp5qqvlfuf13vfak2r.apps.googleusercontent.com'
 };
 
 /*

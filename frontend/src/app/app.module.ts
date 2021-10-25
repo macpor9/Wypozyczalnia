@@ -5,7 +5,12 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './authservice/login/login.component';
-import {FacebookLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+  SocialAuthServiceConfig,
+  SocialLoginModule
+} from 'angularx-social-login';
 import {ReactiveFormsModule} from "@angular/forms";
 import {environment} from "../environments/environment";
 import {NotFoundComponent} from './not-found/not-found.component';
@@ -36,6 +41,12 @@ import {HttpClientModule} from "@angular/common/http";
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider(
               environment.facebookAppId
+            )
+          },
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              environment.googleAppId
             )
           }
         ]

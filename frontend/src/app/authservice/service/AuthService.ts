@@ -1,7 +1,9 @@
 import {Injectable, OnInit} from "@angular/core";
-import {FacebookLoginProvider, SocialAuthService, SocialUser} from "angularx-social-login";
+import {FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser} from "angularx-social-login";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {LoginResponse} from "../models/LoginResponse";
+import {map} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class AuthService implements OnInit {
@@ -22,19 +24,46 @@ export class AuthService implements OnInit {
     });
   }
 
-  facebookLogin() {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(e => {
-      console.log(e)
-      this.http.post(environment.apiUrl + "/facebook/signin", {accessToken: e.authToken}).subscribe(
-        data => console.log('success', data),
-        error => console.log('error', error)
-      );
-
-    }, e => console.log("error "))
+  login(login: string, password: string) {
+    return this.http.post<LoginResponse>(SIGNIN_URL, {login, password})
+      .pipe(map(response => {
+        localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
+      }));
   }
 
+  facebookLogin() {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, {prompt: 'consent'}).then(e => {
+      console.log(e)
+      this.http.post<LoginResponse>(environment.apiUrl + FACEBOOK_SIGNIN_URL, {accessToken: e.authToken})
+        .pipe(map(response => {
+          console.log(response)
+          localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
+        })).toPromise()
+        .then(e => console.log("success" + e), e => console.log("error" + e));
+    }, e => console.log(e))
+  }
+
+  googleLogin() {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID, {prompt: 'consent'}).then(e => {
+      console.log(e)
+      this.http.post<LoginResponse>(environment.apiUrl + GOOGLE_SIGNIN_URL, {accessToken: e.authToken})
+        .pipe(map(response => {
+          console.log("sddsdsds")
+          localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
+        })).toPromise()
+        .then(e => console.log("success" + e), e => console.log("error" + e));
+    }, e => console.log(e))
+  }
+
+
   signOut() {
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
     this.socialAuthService.signOut();
 
   }
 }
+
+const ACCESS_TOKEN_KEY = "accessToken";
+const FACEBOOK_SIGNIN_URL = "/facebook/signin";
+const GOOGLE_SIGNIN_URL = "/google/signin"
+const SIGNIN_URL = "/api/login";
