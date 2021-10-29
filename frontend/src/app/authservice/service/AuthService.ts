@@ -9,6 +9,8 @@ import {map} from "rxjs/operators";
 export class AuthService implements OnInit {
   socialUser!: SocialUser;
   isLoggedIn: boolean = false;
+  username!: string;
+  password!: string;
 
 
   constructor(
@@ -24,11 +26,11 @@ export class AuthService implements OnInit {
     });
   }
 
-  login(login: string, password: string) {
-    return this.http.post<LoginResponse>(SIGNIN_URL, {login, password})
+  login(username: string, password: string) {
+    return this.http.post<LoginResponse>(environment.apiUrl + SIGNIN_URL, {username, password})
       .pipe(map(response => {
         localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
-      }));
+      })).toPromise().then(e => console.log("success"), e => console.log("error" + e));
   }
 
   facebookLogin() {
@@ -39,7 +41,7 @@ export class AuthService implements OnInit {
           console.log(response)
           localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
         })).toPromise()
-        .then(e => console.log("success" + e), e => console.log("error" + e));
+        .then(e => console.log("success"), e => console.log("error" + e));
     }, e => console.log(e))
   }
 
@@ -51,7 +53,7 @@ export class AuthService implements OnInit {
           console.log("sddsdsds")
           localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
         })).toPromise()
-        .then(e => console.log("success" + e), e => console.log("error" + e));
+        .then(e => console.log("success"), e => console.log("error" + e));
     }, e => console.log(e))
   }
 
@@ -66,4 +68,4 @@ export class AuthService implements OnInit {
 const ACCESS_TOKEN_KEY = "accessToken";
 const FACEBOOK_SIGNIN_URL = "/facebook/signin";
 const GOOGLE_SIGNIN_URL = "/google/signin"
-const SIGNIN_URL = "/api/login";
+const SIGNIN_URL = "/signin";

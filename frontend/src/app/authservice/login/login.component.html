@@ -1,7 +1,60 @@
-<div *ngIf="!authService.isLoggedIn">
-  <button type="button" (click)="loginWithFacebook()" class="btn btn-primary btn-block">Signin with Facebook</button>
-</div>
-
-<div *ngIf="!authService.isLoggedIn">
-  <button type="button" (click)="loginWithGoogle()" class="btn btn-danger">Login with Google</button>
-</div>
+<section class="login-block">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <form class="md-float-material form-material" action="#" method="POST">
+          <div class="auth-box card">
+            <div class="card-block">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3 class="text-center heading">Login with your account!</h3>
+                </div>
+              </div>
+              <div class="form-group form-primary"><input [(ngModel)]="authService.username" type="text"
+                                                          class="form-control" name="email" value=""
+                                                          placeholder="Email" id="email"></div>
+              <div class="form-group form-primary"><input [(ngModel)]="authService.password" type="password"
+                                                          class="form-control" name="password"
+                                                          placeholder="Password" value="" id="password"></div>
+              <div class="row d-flex justify-content-center m-b-20">
+                <div class="col-md-12 d-flex justify-content-center d-flex align-items-center">
+                  <div class="btn btn-primary btn-md btn-block waves-effect text-center"
+                       (click)="login(authService.username, authService.password)">
+                    Login
+                  </div>
+                  <!--                  <input type="submit"-->
+                  <!--                         class="btn btn-primary btn-md btn-block waves-effect text-center"-->
+                  <!--                         name="submit"-->
+                  <!--                         value="Login">-->
+                </div>
+              </div>
+              <div class="or-container">
+                <div class="line-separator"></div>
+                <div class="or-label">or</div>
+                <div class="line-separator"></div>
+              </div>
+              <div class="row d-flex justify-content-center m-b-20">
+                <div class="col-md-8" (click)="loginWithGoogle()">
+                  <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline
+                  d-flex justify-content-center d-flex align-items-center">
+                    <img src="assets/icons/google-icon.svg">
+                    Signup Using Google</a></div>
+              </div>
+              <div class="row d-flex justify-content-center">
+                <div class="col-md-8" (click)="loginWithFacebook()">
+                  <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline
+                  d-flex justify-content-center d-flex align-items-center">
+                    <img src="assets/icons/facebook-icon.svg">
+                    Signup Using Facebook</a></div>
+              </div>
+              <br>
+              <p class="text-inverse text-center">Dont have an account?
+                <a href="<?= base_url() ?>auth/login" data-abc="true">Sign up!</a>
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

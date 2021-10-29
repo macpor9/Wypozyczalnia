@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
 
+
   constructor(
     private formBuilder: FormBuilder,
     public authService: AuthService
@@ -29,6 +30,11 @@ export class LoginComponent implements OnInit {
     });
 
 
+  }
+
+  login(email: string, password: string): void {
+    console.log("my login")
+    this.authService.login(email, password);
   }
 
   loginWithFacebook(): void {
