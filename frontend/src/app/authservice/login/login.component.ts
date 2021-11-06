@@ -1,23 +1,23 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from "../service/AuthService";
+import {User} from "../models/User";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.sass']
+  styleUrls: ['../authForm.sass']
 })
 
 
 export class LoginComponent implements OnInit {
-
   loginForm!: FormGroup;
-
+  user: User = new User("","","","","")
 
 
   constructor(
     private formBuilder: FormBuilder,
-    public authService: AuthService
+    public authService: AuthService,
   ) {
     console.log("login page")
     console.log(authService.isLoggedIn)
@@ -28,13 +28,11 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
-
-
   }
 
   login(email: string, password: string): void {
     console.log("my login")
-    this.authService.login(email, password);
+    this.authService.login(email, password)
   }
 
   loginWithFacebook(): void {

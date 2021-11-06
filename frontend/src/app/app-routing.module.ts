@@ -3,12 +3,16 @@ import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./authservice/login/login.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
+import {UrlConstants} from "./utils/UrlConstants";
+import {RegisterComponent} from "./authservice/register/register.component";
 
 const routes: Routes = [
-  {path: 'home', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: '**', component: NotFoundComponent}
+  {path: UrlConstants.HOME_PAGE.slice(1), component: HomeComponent},
+  {path: UrlConstants.LOGIN_PAGE.slice(1), component: LoginComponent},
+  {path: UrlConstants.REGISTER_PAGE.slice(1), component: RegisterComponent},
 
+
+  {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({
