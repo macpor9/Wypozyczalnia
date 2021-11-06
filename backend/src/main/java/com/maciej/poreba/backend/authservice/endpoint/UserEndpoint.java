@@ -50,7 +50,7 @@ public class UserEndpoint {
         return UserSummary
                 .builder()
                 .id(userDetails.getId())
-                .username(userDetails.getUsername())
+                .username(userDetails.getSurname())
                 .name(userDetails.getUserProfile().getDisplayName())
                 .profilePicture(userDetails.getUserProfile().getProfilePictureUrl())
                 .build();
@@ -70,7 +70,7 @@ public class UserEndpoint {
         return UserSummary
                 .builder()
                 .id(user.getId())
-                .username(user.getUsername())
+                .username(user.getSurname())
                 .name(user.getUserProfile().getDisplayName())
                 .profilePicture(user.getUserProfile().getProfilePictureUrl())
                 .build();

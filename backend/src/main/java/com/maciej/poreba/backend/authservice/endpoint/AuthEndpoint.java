@@ -54,11 +54,15 @@ public class AuthEndpoint {
 
     @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createUser(@Valid @RequestBody SignUpRequest payload) {
-        log.info("creating user {}", payload.getUsername());
+        log.info("creating user {}", payload.getSurname());
+
+        if(!payload.getPassword().equals(payload.getRepeatPassword()))
+            throw new BadRequestException("passwords dont match!");
 
         User user = User
                 .builder()
-                .username(payload.getUsername())
+                .username(payload.getEmail())
+                .surname(payload.getSurname())
                 .email(payload.getEmail())
                 .password(payload.getPassword())
                 .userProfile(Profile
@@ -75,7 +79,7 @@ public class AuthEndpoint {
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")
-                .buildAndExpand(user.getUsername()).toUri();
+                .buildAndExpand(user.getSurname()).toUri();
 
         return ResponseEntity
                 .created(location)

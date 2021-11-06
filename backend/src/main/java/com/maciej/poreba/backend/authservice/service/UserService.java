@@ -36,15 +36,7 @@ public class UserService {
     }
 
     public User registerUser(User user, Role role) {
-        log.info("registering user {}", user.getUsername());
-
-        if(Boolean.TRUE.equals(userRepository.existsByUsername(user.getUsername()))) {
-            log.warn("username {} already exists.", user.getUsername());
-
-            throw new UsernameAlreadyExistsException(
-                    String.format("username %s already exists", user.getUsername()));
-        }
-
+        log.info("registering user {}", user.getSurname());
         if(Boolean.TRUE.equals(userRepository.existsByEmail(user.getEmail()))) {
             log.warn("email {} already exists.", user.getEmail());
 
