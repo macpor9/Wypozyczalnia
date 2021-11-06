@@ -17,6 +17,8 @@ import {NotFoundComponent} from './not-found/not-found.component';
 import {HttpClientModule} from "@angular/common/http";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { RegisterComponent } from './authservice/register/register.component';
+import { FacebookLoginButtonComponent } from './authservice/templates/facebook-login-button/facebook-login-button.component';
+import { GoogleLoginButtonComponent } from './authservice/templates/google-login-button/google-login-button.component';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import { RegisterComponent } from './authservice/register/register.component';
     LoginComponent,
     NotFoundComponent,
     RegisterComponent,
+    FacebookLoginButtonComponent,
+    GoogleLoginButtonComponent,
   ],
   imports: [
     BrowserModule,

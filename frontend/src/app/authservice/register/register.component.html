@@ -53,20 +53,8 @@
                 <div class="or-label">or</div>
                 <div class="line-separator"></div>
               </div>
-              <div class="row d-flex justify-content-center m-b-20">
-                <div class="col-md-8">
-                  <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline
-                  d-flex justify-content-center d-flex align-items-center">
-                    <img src="assets/icons/google-icon.svg">
-                    Signup Using Google</a></div>
-              </div>
-              <div class="row d-flex justify-content-center">
-                <div class="col-md-8">
-                  <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline
-                  d-flex justify-content-center d-flex align-items-center">
-                    <img src="assets/icons/facebook-icon.svg">
-                    Signup Using Facebook</a></div>
-              </div>
+              <app-google-login-button></app-google-login-button>
+              <app-facebook-login-button></app-facebook-login-button>
               <br>
               <p class="text-inverse text-center">Already have an account?
                 <a routerLink="{{authService.LOGIN_PAGE}}">Sign in!</a>
