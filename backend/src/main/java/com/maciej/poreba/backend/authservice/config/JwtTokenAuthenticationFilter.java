@@ -49,7 +49,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             String username = claims.getSubject();
 
             UsernamePasswordAuthenticationToken auth =
-                    userService.findByUsername(username)
+                    userService.findByEmail(username)
                             .map(InstaUserDetails::new)
                             .map(userDetails -> {
                                 UsernamePasswordAuthenticationToken authentication =

@@ -26,7 +26,9 @@ public class User {
 
     public User(User user) {
         this.id = user.id;
+        this.name = user.name;
         this.username = user.username;
+        this.surname = user.surname;
         this.password = user.password;
         this.email = user.email;
         this.createdAt = user.createdAt;
@@ -36,8 +38,10 @@ public class User {
         this.roles = user.roles;
     }
 
-    public User(String username, String password, String email) {
+    public User(String name, String surname, String password, String email, String username) {
+        this.name = name;
         this.username = username;
+        this.surname = surname;
         this.password = password;
         this.email = email;
         this.active = true;
@@ -50,6 +54,14 @@ public class User {
     @NotBlank
     @Size(max = 15)
     private String username;
+
+    @NotBlank
+    @Size(max = 15)
+    private String surname;
+
+    @NotBlank
+    @Size(max = 15)
+    private String name;
 
     @NotBlank
     @Size(max = 100)
