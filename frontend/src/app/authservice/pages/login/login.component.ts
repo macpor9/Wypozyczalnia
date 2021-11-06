@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from "../service/AuthService";
-import {User} from "../models/User";
+import {AuthService} from "../../service/AuthService";
+import {User} from "../../models/User";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['../authForm.sass']
+  styleUrls: ['../../authForm.sass']
 })
 
 
