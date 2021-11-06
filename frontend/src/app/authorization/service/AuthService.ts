@@ -53,7 +53,7 @@ export class AuthService implements OnInit {
     return this.http.post<LoginResponse>(environment.apiUrl + SIGNIN_URL, {username, password})
       .pipe(map(response => {
         localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
-      })).toPromise().then(e => {
+      })).toPromise().then(() => {
         console.log("success")
         this.router.navigate([this.HOME_PAGE])
       }, e => console.log("error" + e));
@@ -67,7 +67,7 @@ export class AuthService implements OnInit {
           console.log(response)
           localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
         })).toPromise()
-        .then(e => {
+        .then(() => {
           console.log("success")
           this.router.navigate([this.HOME_PAGE])
 
@@ -83,7 +83,7 @@ export class AuthService implements OnInit {
           console.log("sddsdsds")
           localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
         })).toPromise()
-        .then(e => {
+        .then(() => {
           console.log("success")
           this.router.navigate([this.HOME_PAGE])
         }, e => console.log("error" + e));
