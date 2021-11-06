@@ -3,8 +3,8 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HomeComponent} from './home/home.component';
-import {LoginComponent} from './authservice/login/login.component';
+import {HomeComponent} from './application/pages/home/home.component';
+import {LoginComponent} from './authorization/pages/login/login.component';
 import {
   FacebookLoginProvider,
   GoogleLoginProvider,
@@ -13,12 +13,14 @@ import {
 } from 'angularx-social-login';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {environment} from "../environments/environment";
-import {NotFoundComponent} from './not-found/not-found.component';
+import {NotFoundComponent} from './application/pages/not-found/not-found.component';
 import {HttpClientModule} from "@angular/common/http";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { RegisterComponent } from './authservice/register/register.component';
-import { FacebookLoginButtonComponent } from './authservice/components/facebook-login-button/facebook-login-button.component';
-import { GoogleLoginButtonComponent } from './authservice/components/google-login-button/google-login-button.component';
+import { RegisterComponent } from './authorization/pages/register/register.component';
+import { FacebookLoginButtonComponent } from './authorization/components/facebook-login-button/facebook-login-button.component';
+import { GoogleLoginButtonComponent } from './authorization/components/google-login-button/google-login-button.component';
+import { AdminPanelComponent } from './application/pages/admin-panel/admin-panel.component';
+import { TopBarComponent } from './application/components/top-bar/top-bar.component';
 
 
 @NgModule({
@@ -30,6 +32,8 @@ import { GoogleLoginButtonComponent } from './authservice/components/google-logi
     RegisterComponent,
     FacebookLoginButtonComponent,
     GoogleLoginButtonComponent,
+    AdminPanelComponent,
+    TopBarComponent,
   ],
   imports: [
     BrowserModule,
