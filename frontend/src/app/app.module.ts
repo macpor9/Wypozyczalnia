@@ -11,10 +11,14 @@ import {
   SocialAuthServiceConfig,
   SocialLoginModule
 } from 'angularx-social-login';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {environment} from "../environments/environment";
 import {NotFoundComponent} from './not-found/not-found.component';
 import {HttpClientModule} from "@angular/common/http";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { RegisterComponent } from './authservice/register/register.component';
+import { FacebookLoginButtonComponent } from './authservice/components/facebook-login-button/facebook-login-button.component';
+import { GoogleLoginButtonComponent } from './authservice/components/google-login-button/google-login-button.component';
 
 
 @NgModule({
@@ -23,13 +27,18 @@ import {HttpClientModule} from "@angular/common/http";
     HomeComponent,
     LoginComponent,
     NotFoundComponent,
+    RegisterComponent,
+    FacebookLoginButtonComponent,
+    GoogleLoginButtonComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     SocialLoginModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule,
+    FormsModule
   ],
   providers: [
     {
