@@ -54,6 +54,7 @@ public class CarService {
             .orElseThrow(() -> new ResourceNotFoundException(registrationNumber));
 
     if (!car.isAvailable()) throw new CarNotAvailableForRentException(registrationNumber);
+    
 
     car.setReservedFrom(from);
     car.setReservedUntil(to);
