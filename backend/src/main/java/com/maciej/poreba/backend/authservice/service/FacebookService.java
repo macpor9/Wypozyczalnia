@@ -44,6 +44,7 @@ public class FacebookService {
         return User.builder()
                 .id(facebookUser.getId())
                 .email(facebookUser.getEmail())
+                .username(facebookUser.getEmail())
                 .surname(MyUtil.generateUsername(facebookUser.getFirstName(), facebookUser.getLastName()))
                 .password(MyUtil.generatePassword(8))
                 .userProfile(Profile.builder()

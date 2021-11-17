@@ -61,7 +61,6 @@ public class AuthEndpoint {
 
         User user = User
                 .builder()
-                .username(payload.getEmail())
                 .surname(payload.getSurname())
                 .email(payload.getEmail())
                 .password(payload.getPassword())

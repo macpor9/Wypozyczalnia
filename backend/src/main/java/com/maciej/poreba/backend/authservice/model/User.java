@@ -26,13 +26,11 @@ public class User {
 
     public User(User user) {
         this.id = user.id;
-        this.name = user.name;
         this.username = user.username;
+        this.name = user.name;
         this.surname = user.surname;
         this.password = user.password;
         this.email = user.email;
-        this.createdAt = user.createdAt;
-        this.updatedAt = user.updatedAt;
         this.active = user.active;
         this.userProfile = user.userProfile;
         this.roles = user.roles;
@@ -57,21 +55,21 @@ public class User {
 
     @NotBlank
     @Size(max = 15)
-    private String surname;
-
-    @NotBlank
-    @Size(max = 15)
     private String name;
 
     @NotBlank
-    @Size(max = 100)
-    @JsonIgnore
-    private String password;
+    @Size(max = 15)
+    private String surname;
 
     @NotBlank
     @Size(max = 40)
     @Email
     private String email;
+
+    @NotBlank
+    @Size(max = 100)
+    @JsonIgnore
+    private String password;
 
     @CreatedDate
     private Instant createdAt;
@@ -82,4 +80,5 @@ public class User {
     private boolean active;
     private Profile userProfile;
     private Set<Role> roles;
+
 }
