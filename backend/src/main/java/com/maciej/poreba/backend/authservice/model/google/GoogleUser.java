@@ -16,10 +16,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoogleUser {
-    @JsonProperty("resourceName")
-    private String id;
-    private String etag;
-    private List<Names> names;
-    private List<Photos> photos;
-    private List<EmailAddresses> emailAddresses;
+  @JsonProperty("resourceName")
+  private String id;
+
+  private String etag;
+  private List<Names> names;
+  private List<Photos> photos;
+  private List<EmailAddresses> emailAddresses;
 }

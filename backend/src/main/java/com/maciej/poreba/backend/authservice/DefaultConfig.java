@@ -9,12 +9,13 @@ import java.util.Random;
 @Configuration
 public class DefaultConfig {
 
-    @Bean
-    public WebClient webClient() {
-        return WebClient.create();
-    }
+  @Bean
+  public WebClient webClient() {
+    return WebClient.create();
+  }
 
-    @Bean
-    public Random random(){return new Random();}
-
+  @Bean
+  public Random random() {
+    return new Random();
+  }
 }

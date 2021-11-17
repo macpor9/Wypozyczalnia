@@ -14,6 +14,5 @@ import java.io.Serializable;
 @Builder
 public class ExternalServiceWithTokenLoginRequest implements Serializable {
 
-    @NotBlank
-    private String accessToken;
+  @NotBlank private String accessToken;
 }

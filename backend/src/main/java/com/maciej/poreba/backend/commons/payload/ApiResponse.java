@@ -1,4 +1,4 @@
-package com.maciej.poreba.backend.ca.payload;
+package com.maciej.poreba.backend.commons.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class ApiResponse {
 
-    private Boolean success;
-    private String message;
+  private Boolean success;
+  private String message;
 }

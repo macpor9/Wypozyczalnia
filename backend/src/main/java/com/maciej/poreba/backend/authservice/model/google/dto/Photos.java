@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class Photos {
-    private String url;
-    private Metadata metadata;
+  private String url;
+  private Metadata metadata;
 }

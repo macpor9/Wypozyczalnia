@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface CarRepository extends MongoRepository<Car, String> {
-    Optional<Car> findByRegistrationNumber(String registrationNumber);
-    Boolean existsByRegistrationNumber(String registrationNumber);
+  Optional<Car> findByRegistrationNumber(String registrationNumber);
+
+  Boolean existsByRegistrationNumber(String registrationNumber);
 }

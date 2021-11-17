@@ -1,6 +1,5 @@
 package com.maciej.poreba.backend.authservice.config;
 
-
 import com.maciej.poreba.backend.authservice.service.JwtTokenProvider;
 import com.maciej.poreba.backend.authservice.service.UserService;
 import com.maciej.poreba.backend.configuration.OriginFilter;
@@ -28,78 +27,82 @@ import javax.servlet.http.HttpServletResponse;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+  @Autowired private UserDetailsService userDetailsService;
 
-    @Autowired
-    private JwtConfig jwtConfig;
+  @Autowired private JwtConfig jwtConfig;
 
-    @Autowired
-    private JwtTokenProvider tokenProvider;
+  @Autowired private JwtTokenProvider tokenProvider;
 
-    @Autowired
-    private UserService userService;
+  @Autowired private UserService userService;
 
-    @Bean
-    public OriginFilter originFilter(){
-        return new OriginFilter();
-    }
+  @Bean
+  public OriginFilter originFilter() {
+    return new OriginFilter();
+  }
 
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.cors()
+        .and()
+        .csrf()
+        .disable()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+        .exceptionHandling()
+        .authenticationEntryPoint(
+            (req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+        .and()
+        .addFilterBefore(
+            new JwtTokenAuthenticationFilter(jwtConfig, tokenProvider, userService),
+            UsernamePasswordAuthenticationFilter.class)
+        .authorizeRequests()
+        .antMatchers(HttpMethod.POST, "/signin")
+        .permitAll()
+        .antMatchers(HttpMethod.POST, "/facebook/signin")
+        .permitAll()
+        .antMatchers(HttpMethod.POST, "/google/signin")
+        .permitAll()
+        .antMatchers(HttpMethod.POST, "/users")
+        .anonymous()
+        .anyRequest()
+        .authenticated();
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors().and()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-                .and()
-                .addFilterBefore(new JwtTokenAuthenticationFilter(jwtConfig, tokenProvider, userService), UsernamePasswordAuthenticationFilter.class)
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/signin").permitAll()
-                .antMatchers(HttpMethod.POST, "/facebook/signin").permitAll()
-                .antMatchers(HttpMethod.POST, "/google/signin").permitAll()
-                .antMatchers(HttpMethod.POST, "/users").anonymous()
-                .anyRequest().authenticated();
+    http.addFilterBefore(originFilter(), UsernamePasswordAuthenticationFilter.class);
+  }
 
-        http.addFilterBefore(originFilter(), UsernamePasswordAuthenticationFilter.class);
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    // Configure DB authentication provider for user accounts
+    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+  }
 
-    }
+  @Bean
+  public BCryptPasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // Configure DB authentication provider for user accounts
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
+  @Bean(BeanIds.AUTHENTICATION_MANAGER)
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean(BeanIds.AUTHENTICATION_MANAGER)
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @Bean
-    public CorsFilter corsFilter() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        final CorsConfiguration config = new CorsConfiguration();
-//        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("OPTIONS");
-        config.addAllowedMethod("HEAD");
-        config.addAllowedMethod("GET");
-        config.addAllowedMethod("PUT");
-        config.addAllowedMethod("POST");
-        config.addAllowedMethod("DELETE");
-        config.addAllowedMethod("PATCH");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
-
+  @Bean
+  public CorsFilter corsFilter() {
+    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    final CorsConfiguration config = new CorsConfiguration();
+    //        config.setAllowCredentials(true);
+    config.addAllowedOrigin("*");
+    config.addAllowedHeader("*");
+    config.addAllowedMethod("OPTIONS");
+    config.addAllowedMethod("HEAD");
+    config.addAllowedMethod("GET");
+    config.addAllowedMethod("PUT");
+    config.addAllowedMethod("POST");
+    config.addAllowedMethod("DELETE");
+    config.addAllowedMethod("PATCH");
+    source.registerCorsConfiguration("/**", config);
+    return new CorsFilter(source);
+  }
 }

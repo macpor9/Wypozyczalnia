@@ -9,25 +9,25 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Data
 public class AddCarRequest {
-    @NotBlank
-    @Size(max = 15)
-    private String brand;
+  @NotBlank
+  @Size(max = 15)
+  private String brand;
 
-    @NotBlank
-    @Size(max = 15)
-    private String model;
+  @NotBlank
+  @Size(max = 15)
+  private String model;
 
-    @NotBlank
-    @Size(max = 15)
-    private String yearOfProduction;
+  @NotBlank
+  @Size(max = 15)
+  private String yearOfProduction;
 
-    @NotBlank
-    @Size(max = 15)
-    private String price;
+  @NotBlank
+  @Size(max = 15)
+  private String price;
 
-    @NotBlank
-    @Size(max = 15)
-    private String registrationNumber;
+  @NotBlank
+  @Size(max = 15)
+  private String registrationNumber;
 
-    private String pictureUrl;
+  private String pictureUrl;
 }

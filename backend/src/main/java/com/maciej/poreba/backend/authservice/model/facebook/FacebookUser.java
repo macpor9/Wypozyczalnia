@@ -12,11 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FacebookUser {
-    private String id;
-    @JsonProperty("first_name")
-    private String firstName;
-    @JsonProperty("last_name")
-    private String lastName;
-    private String email;
-    private FacebookPicture picture;
+  private String id;
+
+  @JsonProperty("first_name")
+  private String firstName;
+
+  @JsonProperty("last_name")
+  private String lastName;
+
+  private String email;
+  private FacebookPicture picture;
 }

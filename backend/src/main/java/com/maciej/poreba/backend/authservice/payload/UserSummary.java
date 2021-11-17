@@ -7,8 +7,8 @@ import lombok.Data;
 @Builder
 public class UserSummary {
 
-    private String id;
-    private String username;
-    private String name;
-    private String profilePicture;
+  private String id;
+  private String username;
+  private String name;
+  private String profilePicture;
 }

@@ -15,26 +15,25 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Slf4j
 @Log4j2
 public class GoogleClient {
-    private final WebClient webClient;
+  private static final String GOOGLE_PEOPLE_API_BASE = "https://people.googleapis.com";
+  private final WebClient webClient;
 
-    private static final String GOOGLE_PEOPLE_API_BASE = "https://people.googleapis.com";
-
-    public GoogleUser getUser(String accessToken) {
-        String fields = "names,emailAddresses,photos";
-        String uri = GOOGLE_PEOPLE_API_BASE + UriComponentsBuilder
-                .fromPath("/v1/people/me")
+  public GoogleUser getUser(String accessToken) {
+    String fields = "names,emailAddresses,photos";
+    String uri =
+        GOOGLE_PEOPLE_API_BASE
+            + UriComponentsBuilder.fromPath("/v1/people/me")
                 .queryParam("personFields", fields)
                 .build()
                 .toUriString();
 
-        return webClient.get()
-                .uri(uri)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .retrieve()
-                .bodyToMono(GoogleUser.class)
-                .block();
-
-
-    }
+    return webClient
+        .get()
+        .uri(uri)
+        .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        .retrieve()
+        .bodyToMono(GoogleUser.class)
+        .block();
+  }
 }

@@ -16,7 +16,6 @@ import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Set;
 
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -24,61 +23,55 @@ import java.util.Set;
 @Document(collection = "user")
 public class User {
 
-    public User(User user) {
-        this.id = user.id;
-        this.username = user.username;
-        this.name = user.name;
-        this.surname = user.surname;
-        this.password = user.password;
-        this.email = user.email;
-        this.active = user.active;
-        this.userProfile = user.userProfile;
-        this.roles = user.roles;
-    }
+  @Id private String id;
 
-    public User(String name, String surname, String password, String email, String username) {
-        this.name = name;
-        this.username = username;
-        this.surname = surname;
-        this.password = password;
-        this.email = email;
-        this.active = true;
-        this.roles = Set.of(new Role("USER"));
-    }
+  @NotBlank
+  @Size(max = 15)
+  private String username;
 
-    @Id
-    private String id;
+  @NotBlank
+  @Size(max = 15)
+  private String name;
 
-    @NotBlank
-    @Size(max = 15)
-    private String username;
+  @NotBlank
+  @Size(max = 15)
+  private String surname;
 
-    @NotBlank
-    @Size(max = 15)
-    private String name;
+  @NotBlank
+  @Size(max = 40)
+  @Email
+  private String email;
 
-    @NotBlank
-    @Size(max = 15)
-    private String surname;
+  @NotBlank
+  @Size(max = 100)
+  @JsonIgnore
+  private String password;
 
-    @NotBlank
-    @Size(max = 40)
-    @Email
-    private String email;
+  @CreatedDate private Instant createdAt;
+  @LastModifiedDate private Instant updatedAt;
+  private boolean active;
+  private Profile userProfile;
+  private Set<Role> roles;
 
-    @NotBlank
-    @Size(max = 100)
-    @JsonIgnore
-    private String password;
+  public User(User user) {
+    this.id = user.id;
+    this.username = user.username;
+    this.name = user.name;
+    this.surname = user.surname;
+    this.password = user.password;
+    this.email = user.email;
+    this.active = user.active;
+    this.userProfile = user.userProfile;
+    this.roles = user.roles;
+  }
 
-    @CreatedDate
-    private Instant createdAt;
-
-    @LastModifiedDate
-    private Instant updatedAt;
-
-    private boolean active;
-    private Profile userProfile;
-    private Set<Role> roles;
-
+  public User(String name, String surname, String password, String email, String username) {
+    this.name = name;
+    this.username = username;
+    this.surname = surname;
+    this.password = password;
+    this.email = email;
+    this.active = true;
+    this.roles = Set.of(new Role("USER"));
+  }
 }
