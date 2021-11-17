@@ -55,7 +55,6 @@ public class CarService {
 
     if (!car.isAvailable()) throw new CarNotAvailableForRentException(registrationNumber);
     
-
     car.setReservedFrom(from);
     car.setReservedUntil(to);
     car.setAvailable(false);
