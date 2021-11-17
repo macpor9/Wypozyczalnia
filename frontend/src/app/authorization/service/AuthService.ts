@@ -80,7 +80,6 @@ export class AuthService implements OnInit {
       console.log(e)
       this.http.post<LoginResponse>(environment.apiUrl + GOOGLE_SIGNIN_URL, {accessToken: e.authToken})
         .pipe(map(response => {
-          console.log("sddsdsds")
           localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
         })).toPromise()
         .then(() => {

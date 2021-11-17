@@ -1,6 +1,6 @@
-package com.maciej.poreba.backend.authservice.endpoint;
+package com.maciej.poreba.backend.authservice.resource;
 
-import com.maciej.poreba.backend.authservice.exception.ResourceNotFoundException;
+import com.maciej.poreba.backend.ca.exception.ResourceNotFoundException;
 import com.maciej.poreba.backend.authservice.model.InstaUserDetails;
 import com.maciej.poreba.backend.authservice.model.User;
 import com.maciej.poreba.backend.authservice.payload.UserSummary;
@@ -12,20 +12,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @Slf4j
-public class UserEndpoint {
+@RequestMapping("/users")
+public class UserResource {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findUser(@PathVariable("username") String username) {
         log.info("retrieving user {}", username);
 
@@ -35,15 +33,15 @@ public class UserEndpoint {
                 .orElseThrow(() -> new ResourceNotFoundException(username));
     }
 
-    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findAll() {
-        log.info("retrieving all users");
+        log.info("retrieving all");
 
         return ResponseEntity
                 .ok(userService.findAll());
     }
 
-    @GetMapping(value = "/users/me", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER') or hasRole('FACEBOOK_USER')")
     @ResponseStatus(HttpStatus.OK)
     public UserSummary getCurrentUser(@AuthenticationPrincipal InstaUserDetails userDetails) {
@@ -56,7 +54,7 @@ public class UserEndpoint {
                 .build();
     }
 
-    @GetMapping(value = "/users/summary/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/summary/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserSummary(@PathVariable("username") String username) {
         log.info("retrieving user {}", username);
 

@@ -1,4 +1,4 @@
-package com.maciej.poreba.backend.authservice.endpoint;
+package com.maciej.poreba.backend.authservice.resource;
 
 
 import com.maciej.poreba.backend.authservice.exception.BadRequestException;
@@ -11,12 +11,14 @@ import com.maciej.poreba.backend.authservice.payload.*;
 import com.maciej.poreba.backend.authservice.service.FacebookService;
 import com.maciej.poreba.backend.authservice.service.GoogleService;
 import com.maciej.poreba.backend.authservice.service.UserService;
+import com.maciej.poreba.backend.ca.payload.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,7 +28,8 @@ import java.net.URI;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class AuthEndpoint {
+@RequestMapping("/auth")
+public class AuthResource {
 
     private final UserService userService;
     private final FacebookService facebookService;
@@ -34,7 +37,7 @@ public class AuthEndpoint {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        String token = userService.loginUser(loginRequest.getUsername(), loginRequest.getPassword());
+        String token = userService.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
 
@@ -64,6 +67,7 @@ public class AuthEndpoint {
                 .surname(payload.getSurname())
                 .email(payload.getEmail())
                 .password(payload.getPassword())
+                .username(payload.getEmail())
                 .userProfile(Profile
                         .builder()
                         .displayName(payload.getName())
@@ -78,7 +82,7 @@ public class AuthEndpoint {
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")
-                .buildAndExpand(user.getSurname()).toUri();
+                .buildAndExpand(user.getUsername()).toUri();
 
         return ResponseEntity
                 .created(location)

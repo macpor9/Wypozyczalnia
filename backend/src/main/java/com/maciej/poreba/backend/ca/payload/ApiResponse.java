@@ -1,4 +1,4 @@
-package com.maciej.poreba.backend.authservice.payload;
+package com.maciej.poreba.backend.ca.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
