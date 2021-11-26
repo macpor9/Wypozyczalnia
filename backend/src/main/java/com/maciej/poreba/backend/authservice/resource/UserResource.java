@@ -39,17 +39,18 @@ public class UserResource {
   }
 
   @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
-  @PreAuthorize("hasRole('USER') or hasRole('FACEBOOK_USER')")
   @ResponseStatus(HttpStatus.OK)
   public UserSummary getCurrentUser(@AuthenticationPrincipal InstaUserDetails userDetails) {
     return UserSummary.builder()
         .id(userDetails.getId())
-        .username(userDetails.getSurname())
-        .name(userDetails.getUserProfile().getDisplayName())
-        .profilePicture(userDetails.getUserProfile().getProfilePictureUrl())
+        .name(userDetails.getName())
+        .surname(userDetails.getSurname())
+        .roles(userDetails.getRoles())
         .build();
   }
 
+
+  @PreAuthorize("hasRole('AN') or hasRole('FACEBOOK_USER') or hasRole('GOOGLE_USER')")
   @GetMapping(value = "/summary/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> getUserSummary(@PathVariable("username") String username) {
     log.info("retrieving user {}", username);
@@ -63,9 +64,9 @@ public class UserResource {
   private UserSummary convertTo(User user) {
     return UserSummary.builder()
         .id(user.getId())
-        .username(user.getSurname())
-        .name(user.getUserProfile().getDisplayName())
-        .profilePicture(user.getUserProfile().getProfilePictureUrl())
+        .surname(user.getSurname())
+        .roles(user.getRoles())
+        .name(user.getName())
         .build();
   }
 }

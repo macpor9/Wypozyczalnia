@@ -4,10 +4,13 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @RequiredArgsConstructor
 public class JwtAuthenticationResponse {
 
-  @NonNull private String accessToken;
+  @NotNull
+  private final String accessToken;
   private String tokenType = "Bearer";
 }

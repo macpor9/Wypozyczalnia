@@ -27,7 +27,7 @@ public class FacebookService {
   private final Random random;
 
   public String loginUser(String fbAccessToken) {
-    var facebookUser = facebookClient.getUser(fbAccessToken);
+    FacebookUser facebookUser = facebookClient.getUser(fbAccessToken);
 
     return userService
         .findByEmail(facebookUser.getEmail())
@@ -52,7 +52,8 @@ public class FacebookService {
         .id(facebookUser.getId())
         .email(facebookUser.getEmail())
         .username(facebookUser.getEmail())
-        .surname(MyUtil.generateUsername(facebookUser.getFirstName(), facebookUser.getLastName()))
+        .name(facebookUser.getFirstName())
+        .surname(facebookUser.getLastName())
         .password(MyUtil.generatePassword(8))
         .userProfile(
             Profile.builder()

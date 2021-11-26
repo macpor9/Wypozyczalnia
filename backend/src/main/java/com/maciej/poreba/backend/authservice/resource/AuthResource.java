@@ -44,16 +44,14 @@ public class AuthResource {
   }
 
   @PostMapping("/facebook/signin")
-  public ResponseEntity<?> facebookAuth(
-      @Valid @RequestBody ExternalServiceWithTokenLoginRequest facebookLoginRequest) {
+  public ResponseEntity<?> facebookAuth(@Valid @RequestBody ExternalServiceWithTokenLoginRequest facebookLoginRequest) {
     log.info("facebook login {}", facebookLoginRequest);
     String token = facebookService.loginUser(facebookLoginRequest.getAccessToken());
     return ResponseEntity.ok(new JwtAuthenticationResponse(token));
   }
 
   @PostMapping("/google/signin")
-  public ResponseEntity<?> googleAuth(
-      @Valid @RequestBody ExternalServiceWithTokenLoginRequest googleLoginRequest) {
+  public ResponseEntity<?> googleAuth(@Valid @RequestBody ExternalServiceWithTokenLoginRequest googleLoginRequest) {
     log.info("google login {}", googleLoginRequest);
     String token = googleService.loginUser(googleLoginRequest.getAccessToken());
     return ResponseEntity.ok(new JwtAuthenticationResponse(token));
@@ -68,6 +66,7 @@ public class AuthResource {
 
     User user =
         User.builder()
+            .name(payload.getName())
             .surname(payload.getSurname())
             .email(payload.getEmail())
             .password(payload.getPassword())

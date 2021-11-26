@@ -20,6 +20,8 @@ import { RegisterComponent } from './authorization/pages/register/register.compo
 import { FacebookLoginButtonComponent } from './authorization/components/facebook-login-button/facebook-login-button.component';
 import { GoogleLoginButtonComponent } from './authorization/components/google-login-button/google-login-button.component';
 import { AdminPanelComponent } from './application/pages/admin-panel/admin-panel.component';
+import { TopBarComponent } from './application/components/top-bar/top-bar.component';
+import { ProfileComponent } from './application/pages/profile/profile.component';
 
 
 @NgModule({
@@ -32,6 +34,8 @@ import { AdminPanelComponent } from './application/pages/admin-panel/admin-panel
     FacebookLoginButtonComponent,
     GoogleLoginButtonComponent,
     AdminPanelComponent,
+    TopBarComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

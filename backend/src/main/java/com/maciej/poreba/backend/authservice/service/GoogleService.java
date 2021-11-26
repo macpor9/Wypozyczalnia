@@ -52,10 +52,8 @@ public class GoogleService {
         .id(googleUser.getId())
         .email(googleUser.getEmailAddresses().get(0).getEmail())
         .username(googleUser.getEmailAddresses().get(0).getEmail())
-        .surname(
-            generateUsername(
-                googleUser.getNames().get(0).getFirstName(),
-                googleUser.getNames().get(0).getLastName()))
+        .name(googleUser.getNames().get(0).getFirstName())
+        .surname(googleUser.getNames().get(0).getLastName())
         .password(MyUtil.generatePassword(8))
         .userProfile(
             Profile.builder()

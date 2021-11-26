@@ -72,6 +72,6 @@ public class User {
     this.password = password;
     this.email = email;
     this.active = true;
-    this.roles = Set.of(new Role("USER"));
+    this.roles = Set.of(Role.USER);
   }
 }

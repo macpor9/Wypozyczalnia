@@ -57,13 +57,13 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
             new JwtTokenAuthenticationFilter(jwtConfig, tokenProvider, userService),
             UsernamePasswordAuthenticationFilter.class)
         .authorizeRequests()
-        .antMatchers(HttpMethod.POST, "/signin")
+        .antMatchers(HttpMethod.POST, "/auth/signin")
         .permitAll()
-        .antMatchers(HttpMethod.POST, "/facebook/signin")
+        .antMatchers(HttpMethod.POST, "/auth/facebook/signin")
         .permitAll()
-        .antMatchers(HttpMethod.POST, "/google/signin")
+        .antMatchers(HttpMethod.POST, "/auth/google/signin")
         .permitAll()
-        .antMatchers(HttpMethod.POST, "/users")
+        .antMatchers(HttpMethod.POST, "/auth/users")
         .anonymous()
         .anyRequest()
         .authenticated();
