@@ -1,0 +1,48 @@
+<div class="uploadPhotoPopup" id="add-group-popup">
+  <div class="inner">
+    <div class="popupHeader">
+      <div class="title">
+        Add new car!
+      </div>
+      <div id="exitButtonContainer">
+        <span class="btn btn-close btn-md btn-block waves-effect text-center optionElement" (click)="closePopup()"></span>
+      </div>
+    </div>
+    <div class="carData">
+      <div class="singleProperty">
+        <span>brand</span>
+        <input type="text" [(ngModel)]="car.brand" placeholder="brand">
+      </div>
+      <div class="singleProperty">
+        <span>model</span>
+        <input type="text" [(ngModel)]="car.model" placeholder="model">
+      </div>
+      <div class="singleProperty">
+        <span>year of production</span>
+        <input type="date" [(ngModel)]="car.yearOfProduction">
+      </div>
+      <div class="singleProperty">
+        <span>registration number</span>
+        <input type="text" [(ngModel)]="car.registrationNumber" placeholder="registration number">
+      </div>
+      <div class="singleProperty">
+        <span>price</span>
+        <input type="text" [(ngModel)]="car.price">
+      </div>
+    </div>
+    <form enctype="multipart/form-data" novalidate *ngIf="isInitial() || isSaving() || true">
+      <h1>Upload Car Photo</h1>
+      <div class="dropbox">
+        <input type="file"
+               (change)="filesChange($event)"
+               accept="image/*" class="input-file">
+        <p *ngIf="isInitial()">
+          Drag your file(s) here to begin<br> or click to browse
+        </p>
+        <p *ngIf="isSaving()"> {{filename}}</p>
+      </div>
+    </form>
+    <div *ngIf="isSuccess()">Car uploaded successfully</div>
+    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="addCar()">add</span>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+$dark-color: #151515
+$middle-color: #262626
+$light-color: #373737
+$lighter-color: #454545
+$text-color: floralwhite
+$hover-color: burlywood
+
+
+.uploadPhotoPopup
+  z-index: 219
+  position: fixed
+  background: rgb(0 0 0 / 60%)
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  align-items: center
+  justify-content: center
+  display: flex
+
+  .inner
+    display: flex
+    flex-direction: column
+    align-items: center
+    height: 40em
+    width: 40em
+    background: floralwhite
+    box-shadow: 0 0 9px 3px black
+    border-radius: 15px
+    text-align: center
+    color: green
+
+    .dropbox
+      outline: 2px dashed grey
+      outline-offset: -10px
+      background: $light-color
+      color: $text-color
+      padding: 10px 10px
+      min-height: 200px
+      position: relative
+      cursor: pointer
+      width: 100%
+
+      p
+        font-size: 1.2em
+        text-align: center
+        padding: 50px 0
+
+    .dropbox:hover
+      background: $lighter-color
+
+
+    .input-file
+      opacity: 0
+      width: 100%
+      //left: -300px
+      height: 200px
+      left: 0vw
+      //left: -3vw
+      position: absolute
+      cursor: pointer
+
+    .popupHeader
+      margin: 10px
+      color: black
+      width: 100%
+      display: flex
+
+      #exitButtonContainer
+        display: flex
+        margin-right: 10px
+        justify-content: end
+        width: 20%
+
+
+      .title
+        padding-left: 20%
+        width: 80%
