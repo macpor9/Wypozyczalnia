@@ -9,14 +9,20 @@ import com.maciej.poreba.backend.application.repository.CarRepository;
 import com.maciej.poreba.backend.commons.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CarService {
   private final CarRepository carRepository;
+  private final static String FILES_PATH = "backend/src/main/resources/photo/";
 
   public Car addCar(AddCarRequest addCarRequest) {
     if (Boolean.TRUE.equals(
@@ -71,7 +78,7 @@ public class CarService {
 
   public void updatePhoto(MultipartFile requestFile, String registrationNumber) {
     String path = new StringBuilder()
-            .append("backend/src/main/resources/photo/")
+            .append(FILES_PATH)
             .append(registrationNumber)
             .append(".jpg")
             .toString();
@@ -98,5 +105,26 @@ public class CarService {
             .stream()
             .map(CarResponse::new)
             .collect(Collectors.toList());
+  }
+
+  public Object getPhoto(String registrationNumber, HttpServletResponse response) {
+    Car car = carRepository.findByRegistrationNumber(registrationNumber)
+            .orElseThrow(() -> new ResourceNotFoundException("car with" + registrationNumber + "not found"));
+
+
+
+    try {
+      String path = car.getPictureUrl();
+      File file = new File(path);
+      FileInputStream fileInputStream = new FileInputStream(file);
+      response.setContentType(MediaType.IMAGE_PNG_VALUE);
+      IOUtils.copy(fileInputStream,response.getOutputStream());
+    } catch (IOException e) {
+      e.printStackTrace();
+      return ResponseEntity.badRequest().body("File not found!");
+    }
+    return null;
+
+
   }
 }

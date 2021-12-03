@@ -64,7 +64,9 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST, "/auth/google/signin")
         .permitAll()
         .antMatchers(HttpMethod.POST, "/auth/users")
-        .anonymous()
+        .permitAll()
+        .antMatchers(HttpMethod.GET, "/cars/car/photo/*")
+        .permitAll()
         .anyRequest()
         .authenticated();
 

@@ -27,4 +27,4 @@ export class HomeComponent implements OnInit {
     console.log("cars: " + this.cars[0].price)
   }
 }
-  
+

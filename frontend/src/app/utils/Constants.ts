@@ -16,4 +16,5 @@ export class Constants {
   static readonly ADD_CAR_REQUEST_URL = "/cars/car"
   static readonly GET_ALL_CARS_REQUEST_URL = "/cars"
   static readonly ADD_CAR_PHOTO_REQUEST_URL = "/cars/car/photo/"
+
 }

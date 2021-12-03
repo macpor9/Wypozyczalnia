@@ -25,14 +25,19 @@ export class CarService implements OnInit {
       .toPromise().then(e => console.log(e))
   }
 
-  uploadCarPhoto(formData: FormData, registrationNumber: string){
+  uploadCarPhoto(formData: FormData, registrationNumber: string) {
     return this.http.post(environment.apiUrl + Constants.ADD_CAR_PHOTO_REQUEST_URL + registrationNumber,
       formData,
       {headers: AuthorizationUtil.multipartHeaders})
   }
 
-  getAllCars(){
+  getAllCars() {
     return this.http.get<CarResponse[]>(environment.apiUrl + Constants.GET_ALL_CARS_REQUEST_URL,
+      {headers: AuthorizationUtil.jsonHeaders})
+  }
+
+  getPhotoUrl(registrationNumber: string) {
+    return this.http.get<string>(environment.apiUrl + Constants.ADD_CAR_PHOTO_REQUEST_URL + registrationNumber,
       {headers: AuthorizationUtil.jsonHeaders})
   }
 }

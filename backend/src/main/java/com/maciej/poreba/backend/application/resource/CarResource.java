@@ -8,17 +8,24 @@ import com.maciej.poreba.backend.application.service.CarService;
 import com.maciej.poreba.backend.commons.payload.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cars")
@@ -71,6 +78,7 @@ public class CarResource {
             rentCarRequest.getReservedUntil()));
   }
   @PostMapping("/car/photo/{registrationNumber}")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile requestFile, @PathVariable("registrationNumber") @NotEmpty String registrationNumber){
     carService.updatePhoto(requestFile, registrationNumber);
 
@@ -81,6 +89,12 @@ public class CarResource {
                     .toUri();
 
     return ResponseEntity.created(location).body(new ApiResponse(true, "File updated successfully"));
+
+  }
+
+  @GetMapping("/car/photo/{registrationNumber}")
+  public Object getUserFiles(@PathVariable("registrationNumber") @NotEmpty String registrationNumber, HttpServletResponse response){
+    return carService.getPhoto(registrationNumber, response);
 
   }
 

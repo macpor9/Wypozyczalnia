@@ -1,10 +1,8 @@
 <section class="mainContainer">
   <app-top-bar></app-top-bar>
-  <div class="content">
-  <span (click)="logCars()">sadadsasd</span>
-    <app-car></app-car>
-    <app-car></app-car>
-    <app-car></app-car>
-    <app-car></app-car>
+  <div class="content" style="list-style-type: none">
+    <li *ngFor="let c of cars">
+      <app-car [car]=c></app-car>
+    </li>
   </div>
 </section>
