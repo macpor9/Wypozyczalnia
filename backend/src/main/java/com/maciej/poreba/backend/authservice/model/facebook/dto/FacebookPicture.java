@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FacebookPicture {
-    private PictureData data;
+  private PictureData data;
 }

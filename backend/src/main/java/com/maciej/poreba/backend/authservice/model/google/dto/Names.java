@@ -5,10 +5,11 @@ import lombok.Data;
 
 @Data
 public class Names {
-    @JsonProperty("givenName")
-    private String firstName;
-    @JsonProperty("familyName")
-    private String lastName;
-    private Metadata metadata;
+  @JsonProperty("givenName")
+  private String firstName;
 
+  @JsonProperty("familyName")
+  private String lastName;
+
+  private Metadata metadata;
 }

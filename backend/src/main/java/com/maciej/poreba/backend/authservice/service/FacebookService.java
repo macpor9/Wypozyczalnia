@@ -21,37 +21,46 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class FacebookService {
 
-    private final FacebookClient facebookClient;
-    private final UserService userService;
-    private final JwtTokenProvider tokenProvider;
-    private final Random random;
+  private final FacebookClient facebookClient;
+  private final UserService userService;
+  private final JwtTokenProvider tokenProvider;
+  private final Random random;
 
+  public String loginUser(String fbAccessToken) {
+    FacebookUser facebookUser = facebookClient.getUser(fbAccessToken);
 
-    public String loginUser(String fbAccessToken) {
-        var facebookUser = facebookClient.getUser(fbAccessToken);
+    return userService
+        .findByEmail(facebookUser.getEmail())
+        .or(
+            () ->
+                Optional.ofNullable(
+                    userService.registerUser(convertTo(facebookUser), Role.FACEBOOK_USER)))
+        .map(InstaUserDetails::new)
+        .map(
+            userDetails ->
+                new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities()))
+        .map(tokenProvider::generateToken)
+        .orElseThrow(
+            () ->
+                new InternalServerException(
+                    "unable to login facebook user id " + facebookUser.getId()));
+  }
 
-        return userService.findByEmail(facebookUser.getEmail())
-                .or(() -> Optional.ofNullable(userService.registerUser(convertTo(facebookUser), Role.FACEBOOK_USER)))
-                .map(InstaUserDetails::new)
-                .map(userDetails -> new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()))
-                .map(tokenProvider::generateToken)
-                .orElseThrow(() ->
-                        new InternalServerException("unable to login facebook user id " + facebookUser.getId()));
-    }
-
-    private User convertTo(FacebookUser facebookUser) {
-        return User.builder()
-                .id(facebookUser.getId())
-                .email(facebookUser.getEmail())
-                .surname(MyUtil.generateUsername(facebookUser.getFirstName(), facebookUser.getLastName()))
-                .password(MyUtil.generatePassword(8))
-                .userProfile(Profile.builder()
-                        .displayName(String
-                                .format("%s %s", facebookUser.getFirstName(), facebookUser.getLastName()))
-                        .profilePictureUrl(facebookUser.getPicture().getData().getUrl())
-                        .build())
-                .build();
-    }
-
+  private User convertTo(FacebookUser facebookUser) {
+    return User.builder()
+        .id(facebookUser.getId())
+        .email(facebookUser.getEmail())
+        .username(facebookUser.getEmail())
+        .name(facebookUser.getFirstName())
+        .surname(facebookUser.getLastName())
+        .password(MyUtil.generatePassword(8))
+        .userProfile(
+            Profile.builder()
+                .displayName(
+                    String.format("%s %s", facebookUser.getFirstName(), facebookUser.getLastName()))
+                .profilePictureUrl(facebookUser.getPicture().getData().getUrl())
+                .build())
+        .build();
+  }
 }

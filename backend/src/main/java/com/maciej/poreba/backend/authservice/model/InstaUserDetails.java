@@ -7,39 +7,37 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-
 public class InstaUserDetails extends User implements UserDetails {
 
-    public InstaUserDetails(final User user) {
-        super(user);
-    }
+  public InstaUserDetails(final User user) {
+    super(user);
+  }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" +role.getName()))
-                .collect(Collectors.toSet());
-    }
+    return getRoles().stream()
+        .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+        .collect(Collectors.toSet());
+  }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return isActive();
-    }
+  @Override
+  public boolean isAccountNonExpired() {
+    return isActive();
+  }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return isActive();
-    }
+  @Override
+  public boolean isAccountNonLocked() {
+    return isActive();
+  }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return isActive();
-    }
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return isActive();
+  }
 
-    @Override
-    public boolean isEnabled() {
-        return isActive();
-    }
+  @Override
+  public boolean isEnabled() {
+    return isActive();
+  }
 }

@@ -5,9 +5,10 @@ import {environment} from "../../../environments/environment";
 import {LoginResponse} from "../models/LoginResponse";
 import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
-import {UrlConstants} from "../../utils/UrlConstants";
+import {Constants} from "../../utils/Constants";
 import {RegisterResponse} from "../models/RegisterResponse";
 import {User} from "../models/User";
+import {UserService} from "../../application/service/UserService";
 
 @Injectable({providedIn: 'root'})
 export class AuthService implements OnInit {
@@ -17,17 +18,17 @@ export class AuthService implements OnInit {
   message!: string;
   successful!: boolean;
 
-  HOME_PAGE = UrlConstants.HOME_PAGE
-  REGISTER_PAGE = UrlConstants.REGISTER_PAGE
-  LOGIN_PAGE = UrlConstants.LOGIN_PAGE
+  HOME_PAGE = Constants.HOME_PAGE
+  REGISTER_PAGE = Constants.REGISTER_PAGE
+  LOGIN_PAGE = Constants.LOGIN_PAGE
 
 
   constructor(
     private socialAuthService: SocialAuthService,
     private http: HttpClient,
-    private router: Router
-  ) {
-  }
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.socialAuthService.authState.subscribe((user) => {
@@ -49,10 +50,11 @@ export class AuthService implements OnInit {
         })
   }
 
-  login(username: string, password: string) {
-    return this.http.post<LoginResponse>(environment.apiUrl + SIGNIN_URL, {username, password})
+  login(email: string, password: string) {
+    return this.http.post<LoginResponse>(environment.apiUrl + SIGNIN_URL, {email, password})
       .pipe(map(response => {
         localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
+        this.userService.setAccountData()
       })).toPromise().then(() => {
         console.log("success")
         this.router.navigate([this.HOME_PAGE])
@@ -64,8 +66,8 @@ export class AuthService implements OnInit {
       console.log(e)
       this.http.post<LoginResponse>(environment.apiUrl + FACEBOOK_SIGNIN_URL, {accessToken: e.authToken})
         .pipe(map(response => {
-          console.log(response)
           localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
+          this.userService.setAccountData()
         })).toPromise()
         .then(() => {
           console.log("success")
@@ -80,8 +82,8 @@ export class AuthService implements OnInit {
       console.log(e)
       this.http.post<LoginResponse>(environment.apiUrl + GOOGLE_SIGNIN_URL, {accessToken: e.authToken})
         .pipe(map(response => {
-          console.log("sddsdsds")
           localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
+          this.userService.setAccountData()
         })).toPromise()
         .then(() => {
           console.log("success")
@@ -94,11 +96,14 @@ export class AuthService implements OnInit {
   signOut() {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     this.socialAuthService.signOut();
+    this.router.navigate([this.LOGIN_PAGE])
   }
+
+
 }
 
 const ACCESS_TOKEN_KEY = "accessToken";
-const FACEBOOK_SIGNIN_URL = "/facebook/signin";
-const GOOGLE_SIGNIN_URL = "/google/signin"
-const SIGNIN_URL = "/signin";
-const REGISTER_URL = '/users';
+const FACEBOOK_SIGNIN_URL = "/auth/facebook/signin";
+const GOOGLE_SIGNIN_URL = "/auth/google/signin"
+const SIGNIN_URL = "/auth/signin";
+const REGISTER_URL = "/auth/users";

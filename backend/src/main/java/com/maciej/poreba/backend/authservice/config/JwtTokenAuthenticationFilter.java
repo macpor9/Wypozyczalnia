@@ -17,57 +17,57 @@ import java.io.IOException;
 
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtConfig jwtConfig;
-    private final JwtTokenProvider tokenProvider;
-    private final UserService userService;
+  private final JwtConfig jwtConfig;
+  private final JwtTokenProvider tokenProvider;
+  private final UserService userService;
 
-    public JwtTokenAuthenticationFilter(
-            JwtConfig jwtConfig,
-            JwtTokenProvider tokenProvider,
-            UserService userService) {
+  public JwtTokenAuthenticationFilter(
+      JwtConfig jwtConfig, JwtTokenProvider tokenProvider, UserService userService) {
 
-        this.jwtConfig = jwtConfig;
-        this.tokenProvider = tokenProvider;
-        this.userService = userService;
+    this.jwtConfig = jwtConfig;
+    this.tokenProvider = tokenProvider;
+    this.userService = userService;
+  }
+
+  @Override
+  protected void doFilterInternal(
+      HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+      throws ServletException, IOException {
+
+    String header = request.getHeader(jwtConfig.getHeader());
+
+    if (header == null || !header.startsWith(jwtConfig.getPrefix())) {
+      chain.doFilter(request, response); // If not valid, go to the next filter.
+      return;
     }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws ServletException, IOException {
+    String token = header.replace(jwtConfig.getPrefix(), "");
 
-        String header = request.getHeader(jwtConfig.getHeader());
+    if (tokenProvider.validateToken(token)) {
+      Claims claims = tokenProvider.getClaimsFromJWT(token);
+      String username = claims.getSubject();
 
-        if(header == null || !header.startsWith(jwtConfig.getPrefix())) {
-            chain.doFilter(request, response);  		// If not valid, go to the next filter.
-            return;
-        }
+      UsernamePasswordAuthenticationToken auth =
+          userService
+              .findByEmail(username)
+              .map(InstaUserDetails::new)
+              .map(
+                  userDetails -> {
+                    UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    authentication.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request));
 
-        String token = header.replace(jwtConfig.getPrefix(), "");
+                    return authentication;
+                  })
+              .orElse(null);
 
-        if(tokenProvider.validateToken(token)) {
-            Claims claims = tokenProvider.getClaimsFromJWT(token);
-            String username = claims.getSubject();
-
-            UsernamePasswordAuthenticationToken auth =
-                    userService.findByEmail(username)
-                            .map(InstaUserDetails::new)
-                            .map(userDetails -> {
-                                UsernamePasswordAuthenticationToken authentication =
-                                        new UsernamePasswordAuthenticationToken(
-                                                userDetails, null, userDetails.getAuthorities());
-                                authentication
-                                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                                return authentication;
-                            })
-                            .orElse(null);
-
-            SecurityContextHolder.getContext().setAuthentication(auth);
-        } else {
-            SecurityContextHolder.clearContext();
-        }
-
-        chain.doFilter(request, response);
+      SecurityContextHolder.getContext().setAuthentication(auth);
+    } else {
+      SecurityContextHolder.clearContext();
     }
 
+    chain.doFilter(request, response);
+  }
 }

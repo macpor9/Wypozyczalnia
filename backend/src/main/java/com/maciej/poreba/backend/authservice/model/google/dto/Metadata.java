@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class Metadata {
-    private String primary;
-    private Source source;
+  private String primary;
+  private Source source;
 }
-

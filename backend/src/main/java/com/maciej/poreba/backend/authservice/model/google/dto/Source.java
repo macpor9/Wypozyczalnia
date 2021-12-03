@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 class Source {
-    private String type;
-    private String id;
+  private String type;
+  private String id;
 }

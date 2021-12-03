@@ -1,9 +1,8 @@
 package com.maciej.poreba.backend.authservice.exception;
 
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class EmailAlreadyExistsException extends RuntimeException {
-
-    public EmailAlreadyExistsException(String message) {
-        super(message);
-    }
+  public final String message;
 }

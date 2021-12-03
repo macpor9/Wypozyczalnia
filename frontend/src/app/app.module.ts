@@ -16,11 +16,14 @@ import {environment} from "../environments/environment";
 import {NotFoundComponent} from './application/pages/not-found/not-found.component';
 import {HttpClientModule} from "@angular/common/http";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { RegisterComponent } from './authorization/pages/register/register.component';
-import { FacebookLoginButtonComponent } from './authorization/components/facebook-login-button/facebook-login-button.component';
-import { GoogleLoginButtonComponent } from './authorization/components/google-login-button/google-login-button.component';
-import { AdminPanelComponent } from './application/pages/admin-panel/admin-panel.component';
-import { TopBarComponent } from './application/components/top-bar/top-bar.component';
+import {RegisterComponent} from './authorization/pages/register/register.component';
+import {FacebookLoginButtonComponent} from './authorization/components/facebook-login-button/facebook-login-button.component';
+import {GoogleLoginButtonComponent} from './authorization/components/google-login-button/google-login-button.component';
+import {AdminPanelComponent} from './application/pages/admin-panel/admin-panel.component';
+import {TopBarComponent} from './application/components/top-bar/top-bar.component';
+import {ProfileComponent} from './application/pages/profile/profile.component';
+import {AddCarPopupComponent} from './application/components/add-car-popup/add-car-popup.component';
+import { CarComponent } from './application/components/car/car.component';
 
 
 @NgModule({
@@ -34,6 +37,9 @@ import { TopBarComponent } from './application/components/top-bar/top-bar.compon
     GoogleLoginButtonComponent,
     AdminPanelComponent,
     TopBarComponent,
+    ProfileComponent,
+    AddCarPopupComponent,
+    CarComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,8 +70,7 @@ import { TopBarComponent } from './application/components/top-bar/top-bar.compon
           }
         ]
       } as SocialAuthServiceConfig,
-    }
-  ],
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 public class EmailAddresses {
-    @JsonProperty("value")
-    private String email;
-    private Metadata metadata;
+  @JsonProperty("value")
+  private String email;
+
+  private Metadata metadata;
 }
