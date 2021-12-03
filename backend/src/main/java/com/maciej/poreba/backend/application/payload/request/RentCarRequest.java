@@ -1,4 +1,4 @@
-package com.maciej.poreba.backend.application.payload;
+package com.maciej.poreba.backend.application.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

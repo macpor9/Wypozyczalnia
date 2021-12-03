@@ -5,29 +5,24 @@ import {Role} from "../../authorization/models/Role";
 import {Injectable, OnInit} from "@angular/core";
 import {SocialAuthService} from "angularx-social-login";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Constants} from "../../utils/Constants";
+import {AuthorizationUtil} from "../../utils/AuthorizationUtil";
 
 @Injectable({providedIn: 'root'})
 export class UserService implements OnInit {
-
-
-
   constructor(
     private socialAuthService: SocialAuthService,
     private http: HttpClient,
-  ){
-  }
+  ){}
 
   ngOnInit() {
   }
 
   setAccountData() {
-    let headers: HttpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem(ACCESS_TOKEN_KEY)}`
-    })
+
     this.http.get<Account>(
-      environment.apiUrl + ACCOUNT_DETAILS_URL,
-      {headers: headers})
+      environment.apiUrl + Constants.ACCOUNT_DETAILS_URL,
+      {headers: AuthorizationUtil.jsonHeaders})
       .pipe(map(response => {
         console.log("setting")
         localStorage.setItem("account", JSON.stringify(response))
@@ -39,6 +34,4 @@ export class UserService implements OnInit {
     return account.roles.includes(role)
   }
 }
-const ACCESS_TOKEN_KEY = "accessToken";
-const ACCOUNT_DETAILS_URL = "/users/me";
 

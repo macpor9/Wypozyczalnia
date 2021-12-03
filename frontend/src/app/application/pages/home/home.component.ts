@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {CarService} from "../../service/CarService";
+import {CarResponse} from "../../models/CarResponse";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-home',
@@ -7,10 +10,21 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() {
+  cars: CarResponse[] = []
+
+  constructor(private carService: CarService) {
   }
 
   ngOnInit(): void {
+    this.getCarList()
   }
 
+  getCarList(){
+    this.carService.getAllCars().toPromise().then(
+      (e) => e.forEach(val => this.cars.push(Object.assign({}, val))))
+  }
+  logCars(){
+    console.log("cars: " + this.cars[0].price)
+  }
 }
+  

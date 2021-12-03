@@ -5,7 +5,7 @@ import {environment} from "../../../environments/environment";
 import {LoginResponse} from "../models/LoginResponse";
 import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
-import {UrlConstants} from "../../utils/UrlConstants";
+import {Constants} from "../../utils/Constants";
 import {RegisterResponse} from "../models/RegisterResponse";
 import {User} from "../models/User";
 import {UserService} from "../../application/service/UserService";
@@ -18,9 +18,9 @@ export class AuthService implements OnInit {
   message!: string;
   successful!: boolean;
 
-  HOME_PAGE = UrlConstants.HOME_PAGE
-  REGISTER_PAGE = UrlConstants.REGISTER_PAGE
-  LOGIN_PAGE = UrlConstants.LOGIN_PAGE
+  HOME_PAGE = Constants.HOME_PAGE
+  REGISTER_PAGE = Constants.REGISTER_PAGE
+  LOGIN_PAGE = Constants.LOGIN_PAGE
 
 
   constructor(

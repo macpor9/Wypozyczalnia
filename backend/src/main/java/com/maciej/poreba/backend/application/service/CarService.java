@@ -3,14 +3,21 @@ package com.maciej.poreba.backend.application.service;
 import com.maciej.poreba.backend.application.exception.CarExistsException;
 import com.maciej.poreba.backend.application.exception.CarNotAvailableForRentException;
 import com.maciej.poreba.backend.application.model.Car;
-import com.maciej.poreba.backend.application.payload.AddCarRequest;
+import com.maciej.poreba.backend.application.payload.request.AddCarRequest;
+import com.maciej.poreba.backend.application.payload.response.CarResponse;
 import com.maciej.poreba.backend.application.repository.CarRepository;
 import com.maciej.poreba.backend.commons.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -60,5 +67,36 @@ public class CarService {
     car.setAvailable(false);
 
     return carRepository.save(car);
+  }
+
+  public void updatePhoto(MultipartFile requestFile, String registrationNumber) {
+    String path = new StringBuilder()
+            .append("backend/src/main/resources/photo/")
+            .append(registrationNumber)
+            .append(".jpg")
+            .toString();
+
+    try {
+      File myFile = new File(path);
+      if(!myFile.exists())
+        myFile.createNewFile();
+      FileOutputStream fileOutputStream = new FileOutputStream(myFile, false);
+      fileOutputStream.write(requestFile.getBytes());
+      fileOutputStream.close();
+      Car car = carRepository.findByRegistrationNumber(registrationNumber)
+              .orElseThrow(() -> new ResourceNotFoundException(registrationNumber));
+      car.setPictureUrl(path);
+      carRepository.save(car);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public List<CarResponse> getAllCars() {
+    return carRepository
+            .findAll()
+            .stream()
+            .map(CarResponse::new)
+            .collect(Collectors.toList());
   }
 }

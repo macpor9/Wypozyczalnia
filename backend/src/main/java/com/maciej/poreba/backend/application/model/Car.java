@@ -33,7 +33,7 @@ public class Car {
 
   @NotBlank
   @Size(max = 15)
-  private String price;
+  private double price;
 
   @NotBlank
   @Size(max = 15)

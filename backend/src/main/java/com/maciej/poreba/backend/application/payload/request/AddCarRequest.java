@@ -1,31 +1,31 @@
-package com.maciej.poreba.backend.application.payload;
+package com.maciej.poreba.backend.application.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @Data
 public class AddCarRequest {
-  @NotBlank
+  @NotEmpty
   @Size(max = 15)
   private String brand;
 
-  @NotBlank
+  @NotEmpty
   @Size(max = 15)
   private String model;
 
-  @NotBlank
+  @NotEmpty
   @Size(max = 15)
   private String yearOfProduction;
 
-  @NotBlank
+  @NotEmpty
   @Size(max = 15)
-  private String price;
+  private double price;
 
-  @NotBlank
+  @NotEmpty
   @Size(max = 15)
   private String registrationNumber;
 
