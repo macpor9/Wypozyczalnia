@@ -25,6 +25,14 @@ export class CarService implements OnInit {
       .toPromise().then(e => console.log(e))
   }
 
+  updateCar(car: Car, initialRegistrationNo: string) {
+    return this.http.put(
+      environment.apiUrl + Constants.REMOVE_CAR_REQUEST_URL + initialRegistrationNo,
+      car,
+      {headers: AuthorizationUtil.jsonHeaders})
+      .toPromise().then(e => console.log(e))
+  }
+
   uploadCarPhoto(formData: FormData, registrationNumber: string) {
     return this.http.post(environment.apiUrl + Constants.ADD_CAR_PHOTO_REQUEST_URL + registrationNumber,
       formData,
@@ -34,6 +42,12 @@ export class CarService implements OnInit {
   getAllCars() {
     return this.http.get<CarResponse[]>(environment.apiUrl + Constants.GET_ALL_CARS_REQUEST_URL,
       {headers: AuthorizationUtil.jsonHeaders})
+  }
+
+  removeCar(registrationNumber: string){
+    return this.http.delete(environment.apiUrl + Constants.REMOVE_CAR_REQUEST_URL + registrationNumber,
+      {headers: AuthorizationUtil.jsonHeaders})
+
   }
 
   getPhotoUrl(registrationNumber: string) {

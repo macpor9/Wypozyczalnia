@@ -1,6 +1,9 @@
 export class Constants {
   //keys
   static readonly ACCESS_TOKEN_KEY = "accessToken";
+  static readonly ADMIN_ROLE_KEY = "ADMIN";
+  static readonly USER_ROLE_KEY = "USER";
+
 
   //pages
   static readonly LOGIN_PAGE: string  = "/login"
@@ -14,6 +17,7 @@ export class Constants {
 
   //carApi
   static readonly ADD_CAR_REQUEST_URL = "/cars/car"
+  static readonly REMOVE_CAR_REQUEST_URL = "/cars/car/"
   static readonly GET_ALL_CARS_REQUEST_URL = "/cars"
   static readonly ADD_CAR_PHOTO_REQUEST_URL = "/cars/car/photo/"
 

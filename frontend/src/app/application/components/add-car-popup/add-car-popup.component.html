@@ -1,8 +1,11 @@
 <div class="uploadPhotoPopup" id="add-group-popup">
   <div class="inner">
     <div class="popupHeader">
-      <div class="title">
+      <div *ngIf="!updating" class="title">
         Add new car!
+      </div>
+      <div *ngIf="updating" class="title">
+        Update a car!
       </div>
       <div id="exitButtonContainer">
         <span class="btn btn-close btn-md btn-block waves-effect text-center optionElement" (click)="closePopup()"></span>
@@ -42,7 +45,9 @@
         <p *ngIf="isSaving()"> {{filename}}</p>
       </div>
     </form>
-    <div *ngIf="isSuccess()">Car uploaded successfully</div>
-    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="addCar()">add</span>
+    <div *ngIf="isSuccess() && !updating">Car uploaded successfully</div>
+    <div *ngIf="isSuccess() && updating">Car updated successfully</div>
+    <span *ngIf="!updating" class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="addCar()">add</span>
+    <span *ngIf="updating" class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="updateCar()">update</span>
   </div>
 </div>

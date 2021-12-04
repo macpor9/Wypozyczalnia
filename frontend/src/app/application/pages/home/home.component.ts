@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CarService} from "../../service/CarService";
 import {CarResponse} from "../../models/CarResponse";
 import {map} from "rxjs/operators";
+import {isWildcardReexportStatement} from "@angular/compiler-cli/ngcc/src/host/commonjs_umd_utils";
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,13 @@ export class HomeComponent implements OnInit {
   }
   logCars(){
     console.log("cars: " + this.cars[0].price)
+  }
+
+  deleteCar(car: CarResponse){
+    // var filtered = someArray.filter(function(el) { return el.Name != "Kristian"; });
+    this.cars = this.cars.filter(function(el) { return el.registrationNumber != car.registrationNumber; });
+    // let carRemove: CarResponse = this.cars.filter(e => e.registrationNumber = car.registrationNumber)
+    // this.cars.splice(this.cars.indexOf(car,1))
   }
 }
 

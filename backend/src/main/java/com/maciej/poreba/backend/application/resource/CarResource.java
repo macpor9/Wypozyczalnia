@@ -3,13 +3,12 @@ package com.maciej.poreba.backend.application.resource;
 import com.maciej.poreba.backend.application.model.Car;
 import com.maciej.poreba.backend.application.payload.request.AddCarRequest;
 import com.maciej.poreba.backend.application.payload.request.RentCarRequest;
+import com.maciej.poreba.backend.application.payload.request.SearchCriteria;
 import com.maciej.poreba.backend.application.payload.response.CarResponse;
 import com.maciej.poreba.backend.application.service.CarService;
 import com.maciej.poreba.backend.commons.payload.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/cars")
@@ -52,7 +46,7 @@ public class CarResource {
 
   @PreAuthorize("hasRole('USER')")
   @GetMapping("/{registrationNumber}")
-  public ResponseEntity<?> findCar(@PathVariable("registrationNumber") String registrationNumber) {
+  public ResponseEntity<?> findCar(@PathVariable("registrationNumber") @NotEmpty String registrationNumber) {
     log.info("retrieving car {}", registrationNumber);
     return ResponseEntity.ok(carService.findCarByRegistrationNumber(registrationNumber));
   }
@@ -64,6 +58,36 @@ public class CarResource {
     List<CarResponse> list = carService.getAllCars();
     return ResponseEntity.ok(list);
   }
+
+  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+  @GetMapping("/specificCars")
+  public ResponseEntity<?> getSpecificCars(@Valid @RequestBody SearchCriteria searchCriteria,
+                                           @RequestParam(required = false) String field,
+                                           @RequestParam(required = false) String mode){
+    log.info("retrieving all cars with search criteria: {}", searchCriteria);
+    List<CarResponse> list = carService.getSpecificCars(searchCriteria, field, mode);
+    return ResponseEntity.ok(list);
+  }
+
+
+  @PreAuthorize("hasRole('ADMIN')")
+  @PutMapping("/car/{registrationNumber}")
+  public ResponseEntity<?> updateCar(@Valid @RequestBody AddCarRequest addCarRequest,
+                                      @PathVariable("registrationNumber") @NotEmpty String registrationNumber){
+    log.info("updating car: " + registrationNumber);
+    carService.updateCar(addCarRequest, registrationNumber);
+    return ResponseEntity.accepted().body(new ApiResponse(true, "Car updated successfully"));
+
+  }
+
+  @PreAuthorize("hasRole('ADMIN')")
+  @DeleteMapping("/car/{registrationNumber}")
+  public ResponseEntity<?> removeCar(@PathVariable("registrationNumber") @NotEmpty String registrationNumber) {
+    log.info("removing car: " + registrationNumber);
+    carService.removeCar(registrationNumber);
+    return ResponseEntity.noContent().build();
+  }
+
 
   @PreAuthorize("hasRole('USER')")
   @GetMapping("/rentCar/{registrationNumber}")
