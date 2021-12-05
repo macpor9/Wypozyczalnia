@@ -54,7 +54,6 @@ export class AuthService implements OnInit {
     return this.http.post<LoginResponse>(environment.apiUrl + SIGNIN_URL, {email, password})
       .toPromise().then((response) => {
         localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
-        console.log("success")
         this.userService.setAccountData()
           .toPromise()
           .then(e => this.router.navigate([this.HOME_PAGE]))
@@ -63,12 +62,10 @@ export class AuthService implements OnInit {
 
   facebookLogin() {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, {prompt: 'consent'}).then(e => {
-      console.log(e)
       this.http.post<LoginResponse>(environment.apiUrl + FACEBOOK_SIGNIN_URL, {accessToken: e.authToken})
        .toPromise()
         .then((response) => {
           localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
-          console.log("success")
           this.userService.setAccountData().toPromise().then(e => this.router.navigate([this.HOME_PAGE]))
         }, e => console.log("error" + e));
     }, e => console.log(e))
@@ -76,12 +73,10 @@ export class AuthService implements OnInit {
 
   googleLogin() {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID, {prompt: 'consent'}).then(e => {
-      console.log(e)
       this.http.post<LoginResponse>(environment.apiUrl + GOOGLE_SIGNIN_URL, {accessToken: e.authToken})
       .toPromise()
         .then((response) => {
           localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
-          console.log("success")
           this.userService.setAccountData().toPromise().then(e => this.router.navigate([this.HOME_PAGE]))
         }, e => console.log("error" + e));
     }, e => console.log(e))

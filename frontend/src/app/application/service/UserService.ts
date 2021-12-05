@@ -31,9 +31,6 @@ export class UserService implements OnInit {
 
   hasRole(role: string): boolean {
     let account: Account = JSON.parse(localStorage.getItem('account') || "")
-    console.log("roles: " + account.roles)
-    console.log("role: " + role)
-    console.log("tok" + localStorage.getItem(Constants.ACCESS_TOKEN_KEY))
     return account.roles.includes(role)
   }
 }

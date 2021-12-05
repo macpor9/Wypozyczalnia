@@ -42,8 +42,6 @@ export class AddCarPopupComponent implements OnInit {
   filesChange(event: any) {
     this.currentStatus = this.STATUS_SAVING;
     let file = event.target.files[event.target.files.length-1]
-    console.log(event.target.files.size)
-    console.log(event.target.files.length)
     this.filename = file.name
 
     if(file) {
