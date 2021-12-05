@@ -1,0 +1,22 @@
+<section class="filterContainer">
+  <div class="field_name">Model</div>
+  <select>
+   <option *ngFor="let model of models" [value]="model">{{model}}</option>
+  </select>
+
+  <div class="field_name">Brand</div>
+  <select class="field_value" id="brandSelect">
+    <option *ngFor="let brand of brands" [value]="brand">{{brand}}</option>
+  </select>
+
+  <div class="field_name">price</div>
+  <div class="field_value">
+    <input type="number" value="0">
+    -
+    <input type="number" value="10000">
+  </div>
+
+  <div class="field_value">
+    <input type="checkbox" checked>
+  </div>
+</section>

@@ -17,4 +17,6 @@ export class CarResponse {
     this.available = available;
     this.availableDate = availableDate;
   }
+
+
 }

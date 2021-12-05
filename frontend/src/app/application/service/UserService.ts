@@ -20,13 +20,13 @@ export class UserService implements OnInit {
 
   setAccountData() {
 
-    this.http.get<Account>(
+    return this.http.get<Account>(
       environment.apiUrl + Constants.ACCOUNT_DETAILS_URL,
-      {headers: AuthorizationUtil.jsonHeaders})
+      {headers: AuthorizationUtil.getJsonHeaders()})
       .pipe(map(response => {
         console.log("setting")
         localStorage.setItem("account", JSON.stringify(response))
-      })).toPromise().then((r) => console.log("success: " + r), (e) => console.log("error: " + e))
+      }))
   }
 
   hasRole(role: string): boolean {

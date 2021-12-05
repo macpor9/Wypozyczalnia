@@ -9,4 +9,5 @@ public interface CarRepository extends MongoRepository<Car, String> {
   Optional<Car> findByRegistrationNumber(String registrationNumber);
 
   Boolean existsByRegistrationNumber(String registrationNumber);
+
 }

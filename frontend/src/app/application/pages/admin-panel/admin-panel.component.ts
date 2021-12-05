@@ -9,8 +9,7 @@ export class AdminPanelComponent implements OnInit {
 
   @Input()
   @Output()
-  //todo change to false
-  opened: boolean = true
+  opened: boolean = false
 
   ngOnInit(): void {
   }

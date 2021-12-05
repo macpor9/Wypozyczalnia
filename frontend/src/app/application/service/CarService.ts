@@ -21,19 +21,38 @@ export class CarService implements OnInit {
     return this.http.post(
       environment.apiUrl + Constants.ADD_CAR_REQUEST_URL,
       car,
-      {headers: AuthorizationUtil.jsonHeaders})
+      {headers: AuthorizationUtil.getJsonHeaders()})
       .toPromise().then(e => console.log(e))
   }
 
-  uploadCarPhoto(formData: FormData, registrationNumber: string){
-    return this.http.post(environment.apiUrl + Constants.ADD_CAR_PHOTO_REQUEST_URL + registrationNumber,
-      formData,
-      {headers: AuthorizationUtil.multipartHeaders})
+  updateCar(car: Car, initialRegistrationNo: string) {
+    return this.http.put(
+      environment.apiUrl + Constants.REMOVE_CAR_REQUEST_URL + initialRegistrationNo,
+      car,
+      {headers: AuthorizationUtil.getJsonHeaders()})
+      .toPromise().then(e => console.log(e))
   }
 
-  getAllCars(){
+  uploadCarPhoto(formData: FormData, registrationNumber: string) {
+    return this.http.post(environment.apiUrl + Constants.ADD_CAR_PHOTO_REQUEST_URL + registrationNumber,
+      formData,
+      {headers: AuthorizationUtil.getMultipartHeaders()})
+  }
+
+  getAllCars() {
     return this.http.get<CarResponse[]>(environment.apiUrl + Constants.GET_ALL_CARS_REQUEST_URL,
-      {headers: AuthorizationUtil.jsonHeaders})
+      {headers: AuthorizationUtil.getJsonHeaders()})
+  }
+
+  removeCar(registrationNumber: string){
+    return this.http.delete(environment.apiUrl + Constants.REMOVE_CAR_REQUEST_URL + registrationNumber,
+      {headers: AuthorizationUtil.getJsonHeaders()})
+
+  }
+
+  getPhotoUrl(registrationNumber: string) {
+    return this.http.get<string>(environment.apiUrl + Constants.ADD_CAR_PHOTO_REQUEST_URL + registrationNumber,
+      {headers: AuthorizationUtil.getJsonHeaders()})
   }
 }
 

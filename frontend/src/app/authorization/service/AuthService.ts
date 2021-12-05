@@ -52,42 +52,32 @@ export class AuthService implements OnInit {
 
   login(email: string, password: string) {
     return this.http.post<LoginResponse>(environment.apiUrl + SIGNIN_URL, {email, password})
-      .pipe(map(response => {
+      .toPromise().then((response) => {
         localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
         this.userService.setAccountData()
-      })).toPromise().then(() => {
-        console.log("success")
-        this.router.navigate([this.HOME_PAGE])
+          .toPromise()
+          .then(e => this.router.navigate([this.HOME_PAGE]))
       }, e => console.log("error" + e));
   }
 
   facebookLogin() {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, {prompt: 'consent'}).then(e => {
-      console.log(e)
       this.http.post<LoginResponse>(environment.apiUrl + FACEBOOK_SIGNIN_URL, {accessToken: e.authToken})
-        .pipe(map(response => {
+       .toPromise()
+        .then((response) => {
           localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
-          this.userService.setAccountData()
-        })).toPromise()
-        .then(() => {
-          console.log("success")
-          this.router.navigate([this.HOME_PAGE])
-
+          this.userService.setAccountData().toPromise().then(e => this.router.navigate([this.HOME_PAGE]))
         }, e => console.log("error" + e));
     }, e => console.log(e))
   }
 
   googleLogin() {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID, {prompt: 'consent'}).then(e => {
-      console.log(e)
       this.http.post<LoginResponse>(environment.apiUrl + GOOGLE_SIGNIN_URL, {accessToken: e.authToken})
-        .pipe(map(response => {
+      .toPromise()
+        .then((response) => {
           localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
-          this.userService.setAccountData()
-        })).toPromise()
-        .then(() => {
-          console.log("success")
-          this.router.navigate([this.HOME_PAGE])
+          this.userService.setAccountData().toPromise().then(e => this.router.navigate([this.HOME_PAGE]))
         }, e => console.log("error" + e));
     }, e => console.log(e))
   }
@@ -95,6 +85,7 @@ export class AuthService implements OnInit {
 
   signOut() {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem("account");
     this.socialAuthService.signOut();
     this.router.navigate([this.LOGIN_PAGE])
   }
