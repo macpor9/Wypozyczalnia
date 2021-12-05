@@ -4,7 +4,6 @@ export class Constants {
   static readonly ADMIN_ROLE_KEY = "ADMIN";
   static readonly USER_ROLE_KEY = "USER";
 
-
   //pages
   static readonly LOGIN_PAGE: string  = "/login"
   static readonly REGISTER_PAGE: string = "/register"

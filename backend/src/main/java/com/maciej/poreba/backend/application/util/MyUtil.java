@@ -1,9 +1,9 @@
 package com.maciej.poreba.backend.application.util;
 
-import java.util.Objects;
+import static java.util.Objects.isNull;
 
 public class MyUtil {
-    public static <T extends Object> T returnOrDefault(T defaultField, T newField){
-        return Objects.isNull(newField)?defaultField:newField;
+    public static <T> T returnOrDefault(T defaultField, T newField){
+        return isNull(newField)?defaultField:newField;
     }
 }

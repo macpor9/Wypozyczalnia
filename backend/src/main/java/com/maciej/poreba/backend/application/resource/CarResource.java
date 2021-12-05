@@ -51,7 +51,7 @@ public class CarResource {
     return ResponseEntity.ok(carService.findCarByRegistrationNumber(registrationNumber));
   }
 
-  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('GOOGLE_USER') or hasRole('FACEBOOK_USER')")
   @GetMapping
   public ResponseEntity<?> getAllCars(){
     log.info("retrieving all cars");

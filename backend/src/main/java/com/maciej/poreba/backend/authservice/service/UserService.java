@@ -44,7 +44,11 @@ public class UserService {
     }
     user.setActive(true);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
-    user.setRoles(Set.of(role));
+
+    if(role == Role.USER)
+      user.setRoles(Set.of(role));
+    else
+      user.setRoles(Set.of(role, Role.USER));
 
     return userRepository.save(user);
   }

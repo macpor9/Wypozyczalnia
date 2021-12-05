@@ -20,17 +20,20 @@ export class UserService implements OnInit {
 
   setAccountData() {
 
-    this.http.get<Account>(
+    return this.http.get<Account>(
       environment.apiUrl + Constants.ACCOUNT_DETAILS_URL,
-      {headers: AuthorizationUtil.jsonHeaders})
+      {headers: AuthorizationUtil.getJsonHeaders()})
       .pipe(map(response => {
         console.log("setting")
         localStorage.setItem("account", JSON.stringify(response))
-      })).toPromise().then((r) => console.log("success: " + r), (e) => console.log("error: " + e))
+      }))
   }
 
   hasRole(role: string): boolean {
     let account: Account = JSON.parse(localStorage.getItem('account') || "")
+    console.log("roles: " + account.roles)
+    console.log("role: " + role)
+    console.log("tok" + localStorage.getItem(Constants.ACCESS_TOKEN_KEY))
     return account.roles.includes(role)
   }
 }

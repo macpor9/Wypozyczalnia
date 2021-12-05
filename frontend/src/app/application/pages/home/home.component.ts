@@ -7,7 +7,7 @@ import {isWildcardReexportStatement} from "@angular/compiler-cli/ngcc/src/host/c
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.sass', '../styles.sass']
+  styleUrls: ['./home.component.sass']
 })
 export class HomeComponent implements OnInit {
 
@@ -29,10 +29,7 @@ export class HomeComponent implements OnInit {
   }
 
   deleteCar(car: CarResponse){
-    // var filtered = someArray.filter(function(el) { return el.Name != "Kristian"; });
     this.cars = this.cars.filter(function(el) { return el.registrationNumber != car.registrationNumber; });
-    // let carRemove: CarResponse = this.cars.filter(e => e.registrationNumber = car.registrationNumber)
-    // this.cars.splice(this.cars.indexOf(car,1))
   }
 }
 
