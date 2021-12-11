@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -169,7 +170,10 @@ public class CarService {
     List<CarResponse> carList;
     if (Arrays.asList(sortFields).contains(field)){
       carList = carRepository
-              .findAll(Sort.by(field)).stream().map(CarResponse::new).toList();
+              .findAll(Sort.by(field))
+              .stream()
+              .map(CarResponse::new)
+              .toList();
 
       if (mode != null && mode.equalsIgnoreCase("DESCENDING")) {
         carList = new ArrayList<>(carList);
@@ -183,7 +187,8 @@ public class CarService {
     return list.stream()
             .filter(e -> myFilter(e.getBrand(), searchCriteria.getBrand()))
             .filter(e -> myFilter(e.getModel(), searchCriteria.getModel()))
-            .filter(e -> myFilter(e.getYearOfProduction(), searchCriteria.getYearOfProduction()))
+            .filter(e -> e.getYearOfProduction()>searchCriteria.getYearOfProductionFrom())
+            .filter(e -> e.getYearOfProduction()<searchCriteria.getYearOfProductionTo())
             .filter(e -> myFilter(e.getRegistrationNumber(), searchCriteria.getRegistrationNumber()))
             .filter(e -> e.getPrice()>searchCriteria.getPriceFrom())
             .filter(e -> e.getPrice()<searchCriteria.getPriceTo())

@@ -29,7 +29,7 @@ public class Car {
 
   @NotBlank
   @Size(max = 15)
-  private String yearOfProduction;
+  private int yearOfProduction;
 
   @NotBlank
   @Size(max = 15)

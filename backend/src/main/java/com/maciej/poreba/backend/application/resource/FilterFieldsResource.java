@@ -20,6 +20,7 @@ public class FilterFieldsResource {
     public ResponseEntity<?> getModels(){
         return ResponseEntity.ok(filterFieldsService.getModels());
     }
+
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/brands")
     public ResponseEntity<?> getBrands(){

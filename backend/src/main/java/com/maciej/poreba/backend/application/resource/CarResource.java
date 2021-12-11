@@ -60,7 +60,7 @@ public class CarResource {
   }
 
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-  @GetMapping("/specificCars")
+  @PostMapping("/specificCars")
   public ResponseEntity<?> getSpecificCars(@Valid @RequestBody SearchCriteria searchCriteria,
                                            @RequestParam(required = false) String field,
                                            @RequestParam(required = false) String mode){

@@ -12,7 +12,8 @@ import java.util.Date;
 public class SearchCriteria {
     private String brand;
     private String model;
-    private Date yearOfProduction;
+    private int yearOfProductionFrom;
+    private int yearOfProductionTo;
     private String registrationNumber;
     private double priceFrom;
     private double priceTo;
