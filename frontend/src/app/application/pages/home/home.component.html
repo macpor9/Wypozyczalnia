@@ -1,8 +1,9 @@
 <section class="mainContainer">
   <app-top-bar></app-top-bar>
   <div class="content">
-    <app-filter-window></app-filter-window>
+    <app-filter-window (carsChange)="filterCars($event)"></app-filter-window>
     <div class="cars">
+      <span class="btn btn-primary btn-md btn-block waves-effect text-center openCarPopup" (click)="listCars()">listCars</span>
       <li *ngFor="let c of cars" >
         <app-car [car]=c (carChange)="deleteCar($event)"></app-car>
       </li>

@@ -31,5 +31,13 @@ export class HomeComponent implements OnInit {
   deleteCar(car: CarResponse){
     this.cars = this.cars.filter(function(el) { return el.registrationNumber != car.registrationNumber; });
   }
+
+  listCars() {
+    console.log("home cars number:" + this.cars.length)
+  }
+
+  filterCars(cars: CarResponse[]){
+    this.cars = cars
+  }
 }
 
