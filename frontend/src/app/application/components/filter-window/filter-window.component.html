@@ -1,12 +1,12 @@
 <section class="filterContainer">
+  <div class="field_name">Brand</div>
+  <select class="field_value" id="brandSelect" [(ngModel)]="searchCriteria.brand" (change)="setModels()">
+    <option *ngFor="let brand of brands" [value]="brand" >{{brand}}</option>
+  </select>
+
   <div class="field_name">Model</div>
   <select class="field_value" id="modelSelect" [(ngModel)]="searchCriteria.model">
    <option *ngFor="let model of models" [value]="model" >{{model}}</option>
-  </select>
-
-  <div class="field_name">Brand</div>
-  <select class="field_value" id="brandSelect" [(ngModel)]="searchCriteria.brand">
-    <option *ngFor="let brand of brands" [value]="brand" >{{brand}}</option>
   </select>
 
   <div class="field_name">year of production</div>

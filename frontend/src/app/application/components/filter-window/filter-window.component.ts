@@ -19,11 +19,12 @@ export class FilterWindowComponent implements OnInit {
   sortFields: string = "price"
   sortMode: string = "descending"
 
-
   @Input()
   @Output()
   cars: CarResponse[] = []
   @Output() carsChange = new EventEmitter<CarResponse[]>();
+
+
 
 
   constructor(private filterService: FilterService, private carService: CarService) {
@@ -41,8 +42,11 @@ export class FilterWindowComponent implements OnInit {
 
 
   setModels() {
-    this.filterService.getModels().then(
+    console.log("set models")
+    console.log(this.searchCriteria.brand)
+    this.filterService.getModels(this.searchCriteria.brand).then(
       (e) => {
+        this.models = []
         e.forEach(e => this.models.push(e))
         console.log(this.models)
       }
@@ -52,6 +56,7 @@ export class FilterWindowComponent implements OnInit {
   setBrands() {
     this.filterService.getBrands().then(
       (e) => {
+        this.brands = []
         e.forEach(e => this.brands.push(e))
         console.log(this.brands)
       }

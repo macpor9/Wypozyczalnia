@@ -58,8 +58,8 @@ export class CarService implements OnInit {
 
   getSpecificCars(searchCriteria: SearchCriteria, sortField: string, sortMode: string){
     let params = new HttpParams();
-    params.append("field", sortField)
-    params.append("mode",sortMode)
+    params = params.append("field", sortField)
+    params = params.append("mode",sortMode)
     return this.http.post<CarResponse[]>(environment.apiUrl + Constants.GET_SPECIFIC_CARS_REQUEST_URL, searchCriteria,
       {headers: AuthorizationUtil.getJsonHeaders(), params: params}).toPromise()
   }
