@@ -3,7 +3,7 @@
       <div>registration number</div>
       <div>reserved from</div>
       <div>reserved until</div>
-      <span class="btn btn-close btn-md btn-block waves-effect text-center optionElement" (click)="changeDetailsState()"></span>
+      <span class="btn  btn-md btn-block waves-effect text-center optionElement" (click)="changeDetailsState()" [ngClass]="detailsOpened? 'dropdown-toggle' : 'btn-close'"></span>
     </div>
     <div class="details" *ngIf="detailsOpened">
       <app-car [car]="car" (carChange)="fetchCar()"></app-car>
