@@ -1,10 +1,13 @@
 import {Injectable, OnInit} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Constants} from "../../utils/Constants";
 import {Car} from "../models/Car";
 import {AuthorizationUtil} from "../../utils/AuthorizationUtil";
 import {CarResponse} from "../models/CarResponse";
+import {SearchCriteria} from "../models/SearchCriteria";
+import {from} from "rxjs";
+import {RentRequest} from "../models/RentRequest";
 
 
 @Injectable({providedIn: 'root'})
@@ -53,6 +56,19 @@ export class CarService implements OnInit {
   getPhotoUrl(registrationNumber: string) {
     return this.http.get<string>(environment.apiUrl + Constants.ADD_CAR_PHOTO_REQUEST_URL + registrationNumber,
       {headers: AuthorizationUtil.getJsonHeaders()})
+  }
+
+  getSpecificCars(searchCriteria: SearchCriteria, sortField: string, sortMode: string){
+    let params = new HttpParams();
+    params = params.append("field", sortField)
+    params = params.append("mode",sortMode)
+    return this.http.post<CarResponse[]>(environment.apiUrl + Constants.GET_SPECIFIC_CARS_REQUEST_URL, searchCriteria,
+      {headers: AuthorizationUtil.getJsonHeaders(), params: params}).toPromise()
+  }
+
+  rentCar(registrationNumber: string, rentRequest: RentRequest){
+    this.http.patch(environment.apiUrl + Constants.RENT_CAR_REQUEST_URL + registrationNumber, rentRequest,{headers: AuthorizationUtil.getJsonHeaders()}).toPromise()
+      .then(e => location.reload())
   }
 }
 

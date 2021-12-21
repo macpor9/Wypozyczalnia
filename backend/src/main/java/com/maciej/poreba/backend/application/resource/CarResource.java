@@ -60,7 +60,7 @@ public class CarResource {
   }
 
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-  @GetMapping("/specificCars")
+  @PostMapping("/specificCars")
   public ResponseEntity<?> getSpecificCars(@Valid @RequestBody SearchCriteria searchCriteria,
                                            @RequestParam(required = false) String field,
                                            @RequestParam(required = false) String mode){
@@ -88,19 +88,6 @@ public class CarResource {
     return ResponseEntity.noContent().build();
   }
 
-
-  @PreAuthorize("hasRole('USER')")
-  @GetMapping("/rentCar/{registrationNumber}")
-  public ResponseEntity<?> rentCar(
-      @PathVariable("registrationNumber") String registrationNumber,
-      @RequestBody @Valid RentCarRequest rentCarRequest) {
-    log.info("renting car {}", registrationNumber);
-    return ResponseEntity.ok(
-        carService.rentCarByRegistrationNumber(
-            registrationNumber,
-            rentCarRequest.getReservedFrom(),
-            rentCarRequest.getReservedUntil()));
-  }
   @PostMapping("/car/photo/{registrationNumber}")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile requestFile, @PathVariable("registrationNumber") @NotEmpty String registrationNumber){

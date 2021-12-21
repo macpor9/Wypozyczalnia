@@ -33,5 +33,10 @@ export class UserService implements OnInit {
     let account: Account = JSON.parse(localStorage.getItem('account') || "")
     return account.roles.includes(role)
   }
+
+  isAdmin(): boolean {
+    return this.hasRole('ADMIN')
+  }
+
 }
 

@@ -16,7 +16,7 @@ import java.util.Date;
 public class CarResponse {
    private String model;
    private String brand;
-   private String yearOfProduction;
+   private int yearOfProduction;
    private double price;
    private String registrationNumber;
    private boolean available;

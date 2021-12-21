@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class CarService {
-  private final static String FILES_PATH = "backend/src/main/resources/photo/";
+  private static final String FILES_PATH = "backend/src/main/resources/photo/";
   private final CarRepository carRepository;
   private final String[] sortFields = new String[]{"brand", "model", "yearOfProduction", "price"};
 
@@ -61,21 +62,6 @@ public class CarService {
     return carRepository
         .findByRegistrationNumber(registrationNumber)
         .orElseThrow(() -> new ResourceNotFoundException(registrationNumber));
-  }
-
-  public Car rentCarByRegistrationNumber(String registrationNumber, Date from, Date to) {
-    Car car =
-        carRepository
-            .findByRegistrationNumber(registrationNumber)
-            .orElseThrow(() -> new ResourceNotFoundException(registrationNumber));
-
-    if (!car.isAvailable()) throw new CarNotAvailableForRentException(registrationNumber);
-    
-    car.setReservedFrom(from);
-    car.setReservedUntil(to);
-    car.setAvailable(false);
-
-    return carRepository.save(car);
   }
 
   public void updatePhoto(MultipartFile requestFile, String registrationNumber) {
@@ -169,7 +155,10 @@ public class CarService {
     List<CarResponse> carList;
     if (Arrays.asList(sortFields).contains(field)){
       carList = carRepository
-              .findAll(Sort.by(field)).stream().map(CarResponse::new).toList();
+              .findAll(Sort.by(field))
+              .stream()
+              .map(CarResponse::new)
+              .toList();
 
       if (mode != null && mode.equalsIgnoreCase("DESCENDING")) {
         carList = new ArrayList<>(carList);
@@ -183,16 +172,21 @@ public class CarService {
     return list.stream()
             .filter(e -> myFilter(e.getBrand(), searchCriteria.getBrand()))
             .filter(e -> myFilter(e.getModel(), searchCriteria.getModel()))
-            .filter(e -> myFilter(e.getYearOfProduction(), searchCriteria.getYearOfProduction()))
+            .filter(e -> e.getYearOfProduction()+1>searchCriteria.getYearOfProductionFrom())
+            .filter(e -> e.getYearOfProduction()-1<searchCriteria.getYearOfProductionTo())
             .filter(e -> myFilter(e.getRegistrationNumber(), searchCriteria.getRegistrationNumber()))
-            .filter(e -> e.getPrice()>searchCriteria.getPriceFrom())
-            .filter(e -> e.getPrice()<searchCriteria.getPriceTo())
-            .filter(e -> e.isAvailable() == searchCriteria.isAvailable())
+            .filter(e -> e.getPrice()+1>searchCriteria.getPriceFrom())
+            .filter(e -> e.getPrice()-1<searchCriteria.getPriceTo())
+            .filter(e -> isCarAvailableFilter(e,searchCriteria))
             .toList();
   }
 
   private <T> boolean myFilter(T car, T searchCriteria){
     return car.equals(MyUtil.returnOrDefault(car,searchCriteria));
+  }
+
+  private boolean isCarAvailableFilter(CarResponse car, SearchCriteria searchCriteria){
+    return !searchCriteria.isAvailable() || car.isAvailable() == searchCriteria.isAvailable();
   }
 
 }

@@ -1,22 +1,34 @@
 <section class="filterContainer">
-  <div class="field_name">Model</div>
-  <select>
-   <option *ngFor="let model of models" [value]="model">{{model}}</option>
-  </select>
-
   <div class="field_name">Brand</div>
-  <select class="field_value" id="brandSelect">
-    <option *ngFor="let brand of brands" [value]="brand">{{brand}}</option>
+  <select class="field_value" id="brandSelect" [(ngModel)]="searchCriteria.brand" (change)="setModels()">
+    <option *ngFor="let brand of brands" [value]="brand" >{{brand}}</option>
   </select>
 
+  <div class="field_name">Model</div>
+  <select class="field_value" id="modelSelect" [(ngModel)]="searchCriteria.model">
+   <option *ngFor="let model of models" [value]="model" >{{model}}</option>
+  </select>
+
+  <div class="field_name">year of production</div>
+  <div class="field_value">
+    <input type="number" value="0" [(ngModel)]="searchCriteria.yearOfProductionFrom">
+    -
+    <input type="number" value="10000" [(ngModel)]="searchCriteria.yearOfProductionTo">
+  </div>
   <div class="field_name">price</div>
   <div class="field_value">
-    <input type="number" value="0">
+    <input type="number" value="0" [(ngModel)]="searchCriteria.priceFrom">
     -
-    <input type="number" value="10000">
+    <input type="number" value="10000" [(ngModel)]="searchCriteria.priceTo">
   </div>
 
+  <div class="field_name">Show only available cars</div>
   <div class="field_value">
-    <input type="checkbox" checked>
+    <input type="checkbox" checked [(ngModel)]="searchCriteria.available">
+  </div>
+
+  <div class="buttonContainer">
+    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="applyFilters()">Apply</span>
+    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="resetFilters()">Reset</span>
   </div>
 </section>

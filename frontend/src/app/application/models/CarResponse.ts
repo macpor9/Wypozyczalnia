@@ -19,4 +19,13 @@ export class CarResponse {
   }
 
 
+  toString(){
+    return "model: " + this.model + "\n" +
+     "brand" + this.brand + "\n" +
+     "yearOfProduction" + this.yearOfProduction + "\n" +
+     "price" + this.price + "\n" +
+     "registrationNumber" + this.registrationNumber + "\n" +
+     "available" + this.available + "\n" +
+     "availableDate" + this.availableDate
+  }
 }

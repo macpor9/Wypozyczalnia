@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @AllArgsConstructor
 @Data
@@ -19,7 +20,7 @@ public class AddCarRequest {
 
   @NotEmpty
   @Size(max = 15)
-  private String yearOfProduction;
+  private int yearOfProduction;
 
   @NotEmpty
   @Size(max = 15)

@@ -13,4 +13,6 @@ export class Car{
     this.registrationNumber = registrationNumber;
     this.price = price;
   }
+
+
 }

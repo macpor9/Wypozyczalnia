@@ -6,7 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,9 +21,11 @@ public class FilterFieldsResource {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/models")
-    public ResponseEntity<?> getModels(){
-        return ResponseEntity.ok(filterFieldsService.getModels());
+    public ResponseEntity<?> getModels(@RequestParam(value = "brand", required = false) String brand){
+        List<String> s = filterFieldsService.getModels(brand);
+        return ResponseEntity.ok(filterFieldsService.getModels(brand));
     }
+
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/brands")
     public ResponseEntity<?> getBrands(){
