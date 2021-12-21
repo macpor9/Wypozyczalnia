@@ -11,7 +11,7 @@ export class SearchCriteria {
   constructor(brand: string | undefined = undefined,
               model: string | undefined = undefined,
               yearOfProductionFrom: number | undefined = 1900,
-              yearOfProductionTo: number | undefined = Date.now(),
+              yearOfProductionTo: number | undefined =  new Date().getFullYear(),
               registrationNumber: string | undefined = undefined,
               priceFrom: number | undefined = 0,
               priceTo: number | undefined = 10000000
