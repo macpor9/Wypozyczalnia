@@ -6,6 +6,7 @@ import {environment} from "../../../../environments/environment";
 import {UserService} from "../../service/UserService";
 import {DatePipe} from "@angular/common";
 import {RentRequest} from "../../models/RentRequest";
+import {RentService} from "../../service/RentService";
 
 @Component({
   selector: 'app-car',
@@ -31,7 +32,10 @@ export class CarComponent implements OnInit {
   carChange = new EventEmitter<CarResponse>();
 
   picture: string = ""
-  constructor(private carService: CarService, public userService: UserService) {
+  constructor(private carService: CarService,
+              private rentService: RentService,
+              public userService: UserService
+  ) {
   }
 
   ngOnInit(): void {
@@ -58,7 +62,7 @@ export class CarComponent implements OnInit {
   }
 
   rentCar() {
-    this.carService.rentCar(this.car.registrationNumber, this.rentRequest)
+    this.rentService.rentCar(this.car.registrationNumber, this.rentRequest)
   }
 
   refreshCurrentPrice(){

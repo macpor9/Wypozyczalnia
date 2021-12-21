@@ -6,7 +6,6 @@ import {Car} from "../models/Car";
 import {AuthorizationUtil} from "../../utils/AuthorizationUtil";
 import {CarResponse} from "../models/CarResponse";
 import {SearchCriteria} from "../models/SearchCriteria";
-import {from} from "rxjs";
 import {RentRequest} from "../models/RentRequest";
 
 
@@ -51,6 +50,11 @@ export class CarService implements OnInit {
     return this.http.delete(environment.apiUrl + Constants.REMOVE_CAR_REQUEST_URL + registrationNumber,
       {headers: AuthorizationUtil.getJsonHeaders()})
 
+  }
+
+  getCar(registrationNumber: string){
+    return this.http.get<CarResponse>(environment.apiUrl + Constants.GET_CAR_REQUEST_URL + registrationNumber,
+      {headers: AuthorizationUtil.getJsonHeaders()})
   }
 
   getPhotoUrl(registrationNumber: string) {

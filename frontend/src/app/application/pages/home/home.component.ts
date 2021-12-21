@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CarService} from "../../service/CarService";
 import {CarResponse} from "../../models/CarResponse";
-import {map} from "rxjs/operators";
-import {isWildcardReexportStatement} from "@angular/compiler-cli/ngcc/src/host/commonjs_umd_utils";
 
 @Component({
   selector: 'app-home',
@@ -23,12 +21,8 @@ export class HomeComponent implements OnInit {
   getCarList(){
     this.carService.getAllCars().toPromise().then(
       (e) => {
-        console.log("av: " + e[0].available)
         e.forEach(val => this.cars.push(Object.assign({}, val)))
       })
-  }
-  logCars(){
-    console.log("cars: " + this.cars[0].price)
   }
 
   deleteCar(car: CarResponse){

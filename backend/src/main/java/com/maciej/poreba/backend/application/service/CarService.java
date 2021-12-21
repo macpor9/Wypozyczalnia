@@ -95,6 +95,11 @@ public class CarService {
             .collect(Collectors.toList());
   }
 
+  public CarResponse getCar(String registrationNumber){
+    return carRepository.findByRegistrationNumber(registrationNumber)
+            .map(CarResponse::new).orElseThrow(() -> new ResourceNotFoundException(registrationNumber));
+  }
+
   public Object getPhoto(String registrationNumber, HttpServletResponse response) {
     Car car = carRepository.findByRegistrationNumber(registrationNumber)
             .orElseThrow(() -> new ResourceNotFoundException("car with" + registrationNumber + "not found"));

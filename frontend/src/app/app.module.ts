@@ -25,6 +25,7 @@ import {ProfileComponent} from './application/pages/profile/profile.component';
 import {AddCarPopupComponent} from './application/components/add-car-popup/add-car-popup.component';
 import { CarComponent } from './application/components/car/car.component';
 import { FilterWindowComponent } from './application/components/filter-window/filter-window.component';
+import { CarHistoryComponent } from './application/components/car-history/car-history.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { FilterWindowComponent } from './application/components/filter-window/fi
     AddCarPopupComponent,
     CarComponent,
     FilterWindowComponent,
+    CarHistoryComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 package com.maciej.poreba.backend.application.resource;
 
 import com.maciej.poreba.backend.application.payload.request.RentCarRequest;
+import com.maciej.poreba.backend.application.payload.response.RentResponse;
 import com.maciej.poreba.backend.application.service.RentService;
 import com.maciej.poreba.backend.authservice.model.InstaUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/rent")
@@ -32,5 +34,12 @@ public class RentResource {
                         registrationNumber,
                         rentCarRequest.getReservedFrom(),
                         rentCarRequest.getReservedUntil()));
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/me")
+    public ResponseEntity<?> getRentHistory(@AuthenticationPrincipal InstaUserDetails instaUserDetails){
+        List<RentResponse> list = rentService.getUserRentHistory(instaUserDetails.getEmail());
+        return ResponseEntity.ok(list);
     }
 }

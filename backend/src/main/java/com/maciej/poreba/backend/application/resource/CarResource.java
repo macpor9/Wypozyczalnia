@@ -48,7 +48,7 @@ public class CarResource {
   @GetMapping("/{registrationNumber}")
   public ResponseEntity<?> findCar(@PathVariable("registrationNumber") @NotEmpty String registrationNumber) {
     log.info("retrieving car {}", registrationNumber);
-    return ResponseEntity.ok(carService.findCarByRegistrationNumber(registrationNumber));
+    return ResponseEntity.ok(carService.getCar(registrationNumber));
   }
 
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('GOOGLE_USER') or hasRole('FACEBOOK_USER')")
