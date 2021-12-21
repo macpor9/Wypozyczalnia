@@ -15,7 +15,7 @@ import {RentRequest} from "../../models/RentRequest";
 export class CarComponent implements OnInit {
 
   rentPopup: boolean = false
-  rentRequest: RentRequest = RentRequest.createEmptyRentRequest()
+  rentRequest: RentRequest = new RentRequest()
 
   currentPrice: number = 0
   currentRentDays = 0
@@ -25,7 +25,7 @@ export class CarComponent implements OnInit {
   opened: boolean = false
 
   @Input()
-  car: CarResponse = new CarResponse("","",new Date(),0,"",true, new Date())
+  car: CarResponse = new CarResponse()
 
   @Output()
   carChange = new EventEmitter<CarResponse>();

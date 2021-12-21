@@ -15,7 +15,7 @@ export class FilterWindowComponent implements OnInit {
 
   models: string[] = []
   brands: string[] = []
-  searchCriteria: SearchCriteria = SearchCriteria.createEmptySearchCriteria()
+  searchCriteria: SearchCriteria = new SearchCriteria()
   sortFields: string = "price"
   sortMode: string = "descending"
 
