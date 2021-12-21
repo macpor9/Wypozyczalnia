@@ -75,4 +75,8 @@ export class FilterWindowComponent implements OnInit {
       err => console.log(err)
     )
   }
+
+  resetFilters() {
+    location.reload()
+  }
 }

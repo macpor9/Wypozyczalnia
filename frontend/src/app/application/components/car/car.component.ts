@@ -4,6 +4,7 @@ import {CarService} from "../../service/CarService";
 import {Constants} from "../../../utils/Constants";
 import {environment} from "../../../../environments/environment";
 import {UserService} from "../../service/UserService";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-car',
@@ -11,6 +12,7 @@ import {UserService} from "../../service/UserService";
   styleUrls: ['./car.component.sass']
 })
 export class CarComponent implements OnInit {
+
 
   @Input()
   @Output()
@@ -36,5 +38,14 @@ export class CarComponent implements OnInit {
 
   openPopup() {
     this.opened = true
+  }
+
+  showAvailability(): string {
+    if(this.car.available)
+      return "available now!"
+    return "available at: " + new Date(this.car.availableDate).toISOString().slice(0,10);  }
+
+  rentCar() {
+    this.carService.rentCar(this.car.registrationNumber, new Date(), new Date())
   }
 }

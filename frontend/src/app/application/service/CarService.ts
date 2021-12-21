@@ -63,5 +63,12 @@ export class CarService implements OnInit {
     return this.http.post<CarResponse[]>(environment.apiUrl + Constants.GET_SPECIFIC_CARS_REQUEST_URL, searchCriteria,
       {headers: AuthorizationUtil.getJsonHeaders(), params: params}).toPromise()
   }
+
+  rentCar(registrationNumber: string, from: Date, to: Date){
+    console.log("t")
+    console.log(localStorage.getItem("tok: " + Constants.ACCESS_TOKEN_KEY))
+    this.http.patch(environment.apiUrl + Constants.RENT_CAR_REQUEST_URL + registrationNumber, {reservedFrom: from, reservedUntil: to},{headers: AuthorizationUtil.getJsonHeaders()}).toPromise()
+      .then(e => location.reload())
+  }
 }
 

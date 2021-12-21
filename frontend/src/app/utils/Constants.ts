@@ -20,6 +20,7 @@ export class Constants {
   static readonly GET_ALL_CARS_REQUEST_URL = "/cars"
   static readonly ADD_CAR_PHOTO_REQUEST_URL = "/cars/car/photo/"
   static readonly GET_SPECIFIC_CARS_REQUEST_URL = "/cars/specificCars"
+  static readonly RENT_CAR_REQUEST_URL = "/rent/"
 
   //filterApi
   static readonly GET_MODELS_REQUEST_URL = "/filter/models"

@@ -42,6 +42,7 @@ public class Car {
   private String pictureUrl;
   private Date reservedFrom;
   private Date reservedUntil;
+  private String reservedBy;
 
   @NotBlank private boolean available;
 }

@@ -5,15 +5,16 @@
   </div>
   <div class="col-6">
 
+    brand {{car.brand}}<br>
     model {{car.model}}<br>
-    brand {{car.model}}<br>
     year of production {{car.yearOfProduction}}<br>
+    price {{car.price}}<br>
+    {{showAvailability()}}
 <!--    {{car}}-->
 
   </div>
   <div class="buttonsContainer col-2">
-    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" >bt1</span>
-    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" >button2</span>
+    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" *ngIf="car.available" (click)="rentCar()">rent</span>
     <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement"
           *ngIf="userService.hasRole('ADMIN')"
           (click)="openPopup()">

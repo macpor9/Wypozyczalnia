@@ -22,7 +22,10 @@ export class HomeComponent implements OnInit {
 
   getCarList(){
     this.carService.getAllCars().toPromise().then(
-      (e) => e.forEach(val => this.cars.push(Object.assign({}, val))))
+      (e) => {
+        console.log("av: " + e[0].available)
+        e.forEach(val => this.cars.push(Object.assign({}, val)))
+      })
   }
   logCars(){
     console.log("cars: " + this.cars[0].price)

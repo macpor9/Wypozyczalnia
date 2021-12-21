@@ -22,11 +22,13 @@
     <input type="number" value="10000" [(ngModel)]="searchCriteria.priceTo">
   </div>
 
+  <div class="field_name">Show only available cars</div>
   <div class="field_value">
     <input type="checkbox" checked [(ngModel)]="searchCriteria.available">
   </div>
 
   <div class="buttonContainer">
     <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="applyFilters()">Apply</span>
+    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="resetFilters()">Reset</span>
   </div>
 </section>
