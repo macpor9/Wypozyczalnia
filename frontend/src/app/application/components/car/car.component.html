@@ -14,14 +14,32 @@
 
   </div>
   <div class="buttonsContainer col-2">
-    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" *ngIf="car.available" (click)="rentCar()">rent</span>
+    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" *ngIf="car.available" (click)="changeRentPopupState()">rent</span>
     <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement"
-          *ngIf="userService.hasRole('ADMIN')"
+          *ngIf="userService.isAdmin()"
           (click)="openPopup()">
       update</span>
     <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement"
-          *ngIf="userService.hasRole('ADMIN')"
+          *ngIf="userService.isAdmin()"
           (click)="removeCar()">
       remove</span>
+  </div>
+<!--  <div class="rentContainer col-8" *ngIf="rentPopup">-->
+<!--  todo uncomment line above-->
+  <div class="rentContainer col-8">
+    <div class="dateContainer">
+      Reserve your car: <br>
+      From:
+      <input type="date" [(ngModel)]="rentRequest.reservedFrom" (change)="refreshCurrentPrice()">
+      To:
+      <input type="date" [(ngModel)]="rentRequest.reservedUntil" (change)="refreshCurrentPrice()">
+    </div>
+    <div class="buttonsContainer">
+      <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement"
+            (click)="rentCar()">
+        rent</span>
+      Days: {{this.currentRentDays}}<br>
+      Price: {{this.currentPrice}}
+    </div>
   </div>
 </section>

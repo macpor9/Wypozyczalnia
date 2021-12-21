@@ -2,7 +2,7 @@
   <img src="assets/icons/McRent2.png">
   <div class="optionsContainer">
     <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" routerLink="{{HOME_PAGE}}">Home</span>
-    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" *ngIf="userService.hasRole('ADMIN')" routerLink="{{ADMIN_PAGE}}">Admin panel</span>
+    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" *ngIf="userService.isAdmin()" routerLink="{{ADMIN_PAGE}}">Admin panel</span>
     <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" routerLink="{{PROFILE_PAGE}}">Profile</span>
     <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="signOut()">Logout</span>
   </div>

@@ -22,7 +22,7 @@ export class SearchCriteria {
     this.registrationNumber = registrationNumber;
     this.priceFrom = priceFrom;
     this.priceTo = priceTo;
-    this.available = true;
+    this.available = false;
   }
 
   toString(){

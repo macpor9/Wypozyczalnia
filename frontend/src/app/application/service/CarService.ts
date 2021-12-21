@@ -6,6 +6,8 @@ import {Car} from "../models/Car";
 import {AuthorizationUtil} from "../../utils/AuthorizationUtil";
 import {CarResponse} from "../models/CarResponse";
 import {SearchCriteria} from "../models/SearchCriteria";
+import {from} from "rxjs";
+import {RentRequest} from "../models/RentRequest";
 
 
 @Injectable({providedIn: 'root'})
@@ -64,10 +66,8 @@ export class CarService implements OnInit {
       {headers: AuthorizationUtil.getJsonHeaders(), params: params}).toPromise()
   }
 
-  rentCar(registrationNumber: string, from: Date, to: Date){
-    console.log("t")
-    console.log(localStorage.getItem("tok: " + Constants.ACCESS_TOKEN_KEY))
-    this.http.patch(environment.apiUrl + Constants.RENT_CAR_REQUEST_URL + registrationNumber, {reservedFrom: from, reservedUntil: to},{headers: AuthorizationUtil.getJsonHeaders()}).toPromise()
+  rentCar(registrationNumber: string, rentRequest: RentRequest){
+    this.http.patch(environment.apiUrl + Constants.RENT_CAR_REQUEST_URL + registrationNumber, rentRequest,{headers: AuthorizationUtil.getJsonHeaders()}).toPromise()
       .then(e => location.reload())
   }
 }
