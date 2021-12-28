@@ -27,6 +27,13 @@
     <input type="checkbox" checked [(ngModel)]="searchCriteria.available">
   </div>
 
+  <div class="field_name">Sort by:</div>
+  <div class="field_value">
+    <select class="field_value" id="sortOptionSelect" [(ngModel)]="sortOption">
+      <option *ngFor="let option of sortOptions" [ngValue]="option" >{{option.name}}</option>
+    </select>
+  </div>
+
   <div class="buttonContainer">
     <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="applyFilters()">Apply</span>
     <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="resetFilters()">Reset</span>
