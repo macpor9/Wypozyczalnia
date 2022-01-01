@@ -6,7 +6,7 @@ import {User} from "../../models/User";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['../../authForm.sass']
+  styleUrls: ['../../authForm.sass', "login.component.sass"]
 })
 
 
@@ -19,8 +19,6 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     public authService: AuthService,
   ) {
-    console.log("login page")
-    console.log(authService.isLoggedIn)
   }
 
   ngOnInit() {
@@ -33,18 +31,8 @@ export class LoginComponent implements OnInit {
   login(email: string, password: string): void {
     console.log("my login")
     this.authService.login(email, password)
+    console.log(this.authService.message)
   }
 
-  loginWithFacebook(): void {
-    this.authService.facebookLogin();
-  }
-
-  loginWithGoogle(): void {
-    this.authService.googleLogin();
-  }
-
-  signOut(): void {
-    this.authService.signOut();
-  }
 
 }

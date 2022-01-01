@@ -17,7 +17,7 @@ const routes: Routes = [
 
 
 
-  {path: '**', component: NotFoundComponent}
+  {path: '**', component: LoginComponent}
 ];
 
 @NgModule({
