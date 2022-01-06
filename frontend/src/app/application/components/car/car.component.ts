@@ -53,9 +53,7 @@ export class CarComponent implements OnInit {
   }
 
   showAvailability(): string {
-    if(this.car.available)
-      return "available now!"
-    return "available at: " + new Date(this.car.availableDate).toISOString().slice(0,10);  }
+    return new Date(this.car.availableDate).toISOString().slice(0,10);  }
 
   changeRentPopupState(){
     this.rentPopup = !this.rentPopup
