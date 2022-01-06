@@ -6,6 +6,7 @@ import {SearchCriteria} from "../../models/SearchCriteria";
 import {CarService} from "../../service/CarService";
 import {SortCriteria} from "../../models/SortCriteria";
 import {SortUtil} from "../../../utils/SortUtil";
+import {Options} from "@angular-slider/ngx-slider";
 
 @Component({
   selector: 'app-filter-window',
@@ -20,6 +21,7 @@ export class FilterWindowComponent implements OnInit {
   searchCriteria: SearchCriteria = new SearchCriteria()
   sortOption: SortCriteria = new SortCriteria()
   sortOptions: SortCriteria[] = SortUtil.SORT_OPTIONS
+  priceOptions: Options = new Options()
 
   @Input()
   @Output()
@@ -40,7 +42,6 @@ export class FilterWindowComponent implements OnInit {
     this.setBrands()
   }
 
-
   setModels() {
     console.log("set models")
     console.log(this.searchCriteria.brand)
@@ -48,7 +49,6 @@ export class FilterWindowComponent implements OnInit {
       (e) => {
         this.models = []
         e.forEach(e => this.models.push(e))
-        console.log(this.models)
       }
     )
   }
@@ -58,7 +58,6 @@ export class FilterWindowComponent implements OnInit {
       (e) => {
         this.brands = []
         e.forEach(e => this.brands.push(e))
-        console.log(this.brands)
       }
     )
   }

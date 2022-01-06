@@ -11,5 +11,7 @@ public interface RentRepository extends MongoRepository<Rent, String> {
     Optional<Rent> findByRegistrationNumber(String registrationNumber);
     List<Rent> findByEmail(String email);
     List<Rent> findByReservedUntilBefore(Date date);
+    List<Rent> findAllByRegistrationNumber(String registrationNumber);
+    void deleteByRegistrationNumber(String registrationNumbers);
 
 }

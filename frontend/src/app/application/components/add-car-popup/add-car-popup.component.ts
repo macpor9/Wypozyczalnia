@@ -56,6 +56,7 @@ export class AddCarPopupComponent implements OnInit {
         .toPromise()
         .then(x => {
           console.log("photo uploaded with success")
+          location.reload()
         })
         .catch(err => {
           console.log("photo not uploaded error")

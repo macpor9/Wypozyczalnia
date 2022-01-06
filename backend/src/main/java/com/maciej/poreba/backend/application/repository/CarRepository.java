@@ -13,4 +13,6 @@ public interface CarRepository extends MongoRepository<Car, String> {
   Boolean existsByRegistrationNumber(String registrationNumber);
   List<Car> findByReservedUntilBefore(Date date);
 
+  void deleteByRegistrationNumber(String registrationNumber);
+
 }

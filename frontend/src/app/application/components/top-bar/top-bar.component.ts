@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {AuthService} from "../../../authorization/service/AuthService";
 import {Constants} from "../../../utils/Constants";
 import {UserService} from "../../service/UserService";
@@ -15,6 +15,10 @@ export class TopBarComponent implements OnInit {
   PROFILE_PAGE = Constants.PROFILE_PAGE
   HOME_PAGE = Constants.HOME_PAGE
 
+  @Input()
+  @Output()
+  opened: boolean = false
+
   constructor(public authService: AuthService, public userService: UserService) {
   }
 
@@ -24,6 +28,10 @@ export class TopBarComponent implements OnInit {
 
   signOut(): void {
     this.authService.signOut();
+  }
+
+  openPopup() {
+    this.opened = true
   }
 
 

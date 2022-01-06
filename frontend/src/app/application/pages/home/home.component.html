@@ -1,8 +1,8 @@
 <section class="mainContainer">
   <app-top-bar></app-top-bar>
   <div class="content">
-    <app-filter-window (carsChange)="filterCars($event)"></app-filter-window>
-    <div class="cars">
+    <app-filter-window (carsChange)="filterCars($event)" class="col-4"></app-filter-window>
+    <div class="cars col-8">
       <li *ngFor="let c of cars" >
         <app-car [car]=c (carChange)="deleteCar($event)"></app-car>
       </li>
