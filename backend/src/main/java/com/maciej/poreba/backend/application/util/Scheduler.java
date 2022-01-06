@@ -1,6 +1,5 @@
 package com.maciej.poreba.backend.application.util;
 
-import com.maciej.poreba.backend.application.model.Car;
 import com.maciej.poreba.backend.application.repository.CarRepository;
 import com.maciej.poreba.backend.application.repository.RentRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +8,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.List;
 
 @Component
 @Slf4j
