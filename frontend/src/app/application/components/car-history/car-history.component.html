@@ -1,13 +1,26 @@
 <section class="content">
-    <div class="summary" >
-      <div>registration number</div>
-      <div>reserved from</div>
-      <div>reserved until</div>
-      <div [ngClass]="detailsOpened? 'dropup' : 'dropdown'">
+    <div class="summary" [style]="detailsOpened?  'border: 5px groove #ee5858' : 'border: 5px groove #766ee2'" >
+      <div class="rentHistoryHeader">
+        <label>
+          reserved from:
+        </label>
+        <label class="description">
+          {{getReservedFromString()}}
+        </label>
+      </div>
+      <div class="rentHistoryHeader">
+        <label>
+          reserved until:
+        </label>
+        <label class="description">
+          {{getReservedUntilString()}}
+        </label>
+      </div>
+      <div class="rentHistoryHeader" [ngClass]="detailsOpened? 'dropup' : 'dropdown'">
         <span class="btn btn-md btn-block waves-effect text-center optionElement dropdown-toggle" (click)="changeDetailsState()"></span>
       </div>
     </div>
     <div class="details" *ngIf="detailsOpened">
-      <app-car [car]="car" (carChange)="fetchCar()"></app-car>
+      <app-rent-history-details [car]="car" [rentHistory]="rentHistory"></app-rent-history-details>
     </div>
 </section>

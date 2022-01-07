@@ -12,11 +12,11 @@ export class CarHistoryComponent implements OnInit {
 
 
   @Input()
-  rentHistory: RentHistory = new RentHistory("testD")
+  rentHistory: RentHistory = new RentHistory()
   car: CarResponse = new CarResponse()
   detailsOpened: boolean = false
 
-  constructor(private carService: CarService) { }
+  constructor(private carService: CarService) {  }
 
   ngOnInit(): void {
     this.fetchCar()
@@ -33,4 +33,13 @@ export class CarHistoryComponent implements OnInit {
         this.car = response
       })
   }
+
+
+  getReservedFromString(): string{
+    return new Date(this.rentHistory.reservedFrom).toISOString().slice(0,10);
+  }
+  getReservedUntilString(): string{
+    return new Date(this.rentHistory.reservedUntil).toISOString().slice(0,10);
+  }
+
 }

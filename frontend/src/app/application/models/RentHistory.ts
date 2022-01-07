@@ -17,4 +17,5 @@ export class RentHistory{
       let time = until.getTime() - from.getTime()
       return Math.ceil((time / (1000 * 3600 * 24) + 1))
   }
+
 }

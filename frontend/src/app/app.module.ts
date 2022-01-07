@@ -26,6 +26,7 @@ import {AddCarPopupComponent} from './application/components/add-car-popup/add-c
 import { CarComponent } from './application/components/car/car.component';
 import { FilterWindowComponent } from './application/components/filter-window/filter-window.component';
 import { CarHistoryComponent } from './application/components/car-history/car-history.component';
+import { RentHistoryDetailsComponent } from './application/components/rent-history-details/rent-history-details.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { CarHistoryComponent } from './application/components/car-history/car-hi
     CarComponent,
     FilterWindowComponent,
     CarHistoryComponent,
+    RentHistoryDetailsComponent,
   ],
   imports: [
     BrowserModule,
