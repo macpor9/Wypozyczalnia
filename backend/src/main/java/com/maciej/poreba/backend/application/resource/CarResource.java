@@ -2,7 +2,6 @@ package com.maciej.poreba.backend.application.resource;
 
 import com.maciej.poreba.backend.application.model.Car;
 import com.maciej.poreba.backend.application.payload.request.AddCarRequest;
-import com.maciej.poreba.backend.application.payload.request.RentCarRequest;
 import com.maciej.poreba.backend.application.payload.request.SearchCriteria;
 import com.maciej.poreba.backend.application.payload.response.CarResponse;
 import com.maciej.poreba.backend.application.service.CarService;
@@ -48,7 +47,7 @@ public class CarResource {
   @GetMapping("/{registrationNumber}")
   public ResponseEntity<?> findCar(@PathVariable("registrationNumber") @NotEmpty String registrationNumber) {
     log.info("retrieving car {}", registrationNumber);
-    return ResponseEntity.ok(carService.findCarByRegistrationNumber(registrationNumber));
+    return ResponseEntity.ok(carService.getCar(registrationNumber));
   }
 
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('GOOGLE_USER') or hasRole('FACEBOOK_USER')")

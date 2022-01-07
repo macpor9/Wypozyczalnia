@@ -4,6 +4,9 @@ import {CarResponse} from "../../models/CarResponse";
 import { EventEmitter } from '@angular/core';
 import {SearchCriteria} from "../../models/SearchCriteria";
 import {CarService} from "../../service/CarService";
+import {SortCriteria} from "../../models/SortCriteria";
+import {SortUtil} from "../../../utils/SortUtil";
+import {Options} from "@angular-slider/ngx-slider";
 
 @Component({
   selector: 'app-filter-window',
@@ -15,9 +18,10 @@ export class FilterWindowComponent implements OnInit {
 
   models: string[] = []
   brands: string[] = []
-  searchCriteria: SearchCriteria = SearchCriteria.createEmptySearchCriteria()
-  sortFields: string = "price"
-  sortMode: string = "descending"
+  searchCriteria: SearchCriteria = new SearchCriteria()
+  sortOption: SortCriteria = new SortCriteria()
+  sortOptions: SortCriteria[] = SortUtil.SORT_OPTIONS
+  priceOptions: Options = new Options()
 
   @Input()
   @Output()
@@ -25,9 +29,7 @@ export class FilterWindowComponent implements OnInit {
   @Output() carsChange = new EventEmitter<CarResponse[]>();
 
 
-
-
-  constructor(private filterService: FilterService, private carService: CarService) {
+  constructor(private filterService: FilterService, private carService: CarService, ) {
   }
 
   ngOnInit(): void {
@@ -40,7 +42,6 @@ export class FilterWindowComponent implements OnInit {
     this.setBrands()
   }
 
-
   setModels() {
     console.log("set models")
     console.log(this.searchCriteria.brand)
@@ -48,7 +49,6 @@ export class FilterWindowComponent implements OnInit {
       (e) => {
         this.models = []
         e.forEach(e => this.models.push(e))
-        console.log(this.models)
       }
     )
   }
@@ -58,18 +58,15 @@ export class FilterWindowComponent implements OnInit {
       (e) => {
         this.brands = []
         e.forEach(e => this.brands.push(e))
-        console.log(this.brands)
       }
     )
   }
 
   applyFilters() {
-    console.log("apply")
-    this.carService.getSpecificCars(this.searchCriteria, this.sortFields, this.sortMode).then(
+    this.carService.getSpecificCars(this.searchCriteria, this.sortOption).then(
       (e => {
         this.cars = []
         e.forEach(val => this.cars.push(Object.assign({}, val)))
-        console.log("number of cars: " + this.cars.length)
         this.carsChange.next(this.cars)
       }),
       err => console.log(err)

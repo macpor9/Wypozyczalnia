@@ -1,10 +1,10 @@
 <div class="uploadPhotoPopup" id="add-group-popup">
   <div class="inner">
     <div class="popupHeader">
-      <div *ngIf="!updating" class="title">
+      <div *ngIf="!updating" class="title description">
         Add new car!
       </div>
-      <div *ngIf="updating" class="title">
+      <div *ngIf="updating" class="title description">
         Update a car!
       </div>
       <div id="exitButtonContainer">
@@ -13,28 +13,28 @@
     </div>
     <div class="carData">
       <div class="singleProperty">
-        <span>brand</span>
+        <span class="description">brand:</span>
         <input type="text" [(ngModel)]="car.brand" placeholder="brand">
       </div>
       <div class="singleProperty">
-        <span>model</span>
+        <span class="description">model:</span>
         <input type="text" [(ngModel)]="car.model" placeholder="model">
       </div>
       <div class="singleProperty">
-        <span>year of production</span>
-        <input type="number" [(ngModel)]="car.yearOfProduction">
+        <span class="description">year of production:</span>
+        <input type="number" [(ngModel)]="car.yearOfProduction" placeholder="2021">
       </div>
       <div class="singleProperty">
-        <span>registration number</span>
+        <span class="description">registration number:</span>
         <input type="text" [(ngModel)]="car.registrationNumber" placeholder="registration number">
       </div>
       <div class="singleProperty">
-        <span>price</span>
-        <input type="text" [(ngModel)]="car.price">
+        <span class="description">price:</span>
+        <input type="number" [(ngModel)]="car.price">
       </div>
     </div>
     <form enctype="multipart/form-data" novalidate *ngIf="isInitial() || isSaving() || true">
-      <h1>Upload Car Photo</h1>
+      <h4 class="description uploadTitle">Upload Car Photo</h4>
       <div class="dropbox">
         <input type="file"
                (change)="filesChange($event)"

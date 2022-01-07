@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Constants} from "../../utils/Constants";
 import {AuthorizationUtil} from "../../utils/AuthorizationUtil";
+import {SortCriteria} from "../models/SortCriteria";
 
 @Injectable({providedIn: 'root'})
 export class FilterService implements OnInit {
@@ -28,6 +29,7 @@ export class FilterService implements OnInit {
     return this.http.get<string[]>(environment.apiUrl + Constants.GET_BRANDS_REQUEST_URL,
       {headers: AuthorizationUtil.getJsonHeaders()}).toPromise()
   }
+
 
 }
 

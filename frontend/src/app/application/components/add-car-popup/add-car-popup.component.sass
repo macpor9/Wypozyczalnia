@@ -24,11 +24,29 @@ $hover-color: burlywood
     align-items: center
     height: 40em
     width: 40em
-    background: floralwhite
+    background: rgb(146,139,254)
+    background: radial-gradient(circle, rgba(146,139,254) 0%, rgba(171,171,251) 33%, rgba(192,227,235) 100%)
     box-shadow: 0 0 9px 3px black
     border-radius: 15px
     text-align: center
-    color: green
+
+    .uploadTitle
+      margin: 3vh 0 3vh 0
+      font-size: 26px
+
+    .carData
+      width: 70%
+      .singleProperty
+        display: flex
+        justify-content: space-between
+        flex-direction: row
+
+        span
+          width: 49%
+          text-align: end
+
+        input
+          width: 49%
 
     .dropbox
       outline: 2px dashed grey
@@ -40,6 +58,7 @@ $hover-color: burlywood
       position: relative
       cursor: pointer
       width: 100%
+      margin-bottom: 3vh
 
       p
         font-size: 1.2em
@@ -75,4 +94,33 @@ $hover-color: burlywood
 
       .title
         padding-left: 20%
+        font-size: 30px
         width: 80%
+
+input
+  background-color: transparent
+  border: none
+
+//  chrome
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button
+  -webkit-appearance: none
+  margin: 0
+
+//  firefox
+input[type=number]
+  -moz-appearance: textfield
+
+.description
+  font-family: Arial, Helvetica, sans-serif
+  font-size: 21px
+  letter-spacing: -0.6px
+  word-spacing: 0.4px
+  color: #232323
+  font-weight: normal
+  text-decoration: none
+  font-style: normal
+  font-variant: normal
+  text-transform: capitalize
+
+

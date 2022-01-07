@@ -1,6 +1,5 @@
 package com.maciej.poreba.backend.application.payload.response;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.maciej.poreba.backend.application.model.Car;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

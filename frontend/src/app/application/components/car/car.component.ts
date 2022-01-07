@@ -6,6 +6,7 @@ import {environment} from "../../../../environments/environment";
 import {UserService} from "../../service/UserService";
 import {DatePipe} from "@angular/common";
 import {RentRequest} from "../../models/RentRequest";
+import {RentService} from "../../service/RentService";
 
 @Component({
   selector: 'app-car',
@@ -15,7 +16,7 @@ import {RentRequest} from "../../models/RentRequest";
 export class CarComponent implements OnInit {
 
   rentPopup: boolean = false
-  rentRequest: RentRequest = RentRequest.createEmptyRentRequest()
+  rentRequest: RentRequest = new RentRequest()
 
   currentPrice: number = 0
   currentRentDays = 0
@@ -25,13 +26,16 @@ export class CarComponent implements OnInit {
   opened: boolean = false
 
   @Input()
-  car: CarResponse = new CarResponse("","",new Date(),0,"",true, new Date())
+  car: CarResponse = new CarResponse()
 
   @Output()
   carChange = new EventEmitter<CarResponse>();
 
   picture: string = ""
-  constructor(private carService: CarService, public userService: UserService) {
+  constructor(private carService: CarService,
+              private rentService: RentService,
+              public userService: UserService
+  ) {
   }
 
   ngOnInit(): void {
@@ -49,16 +53,14 @@ export class CarComponent implements OnInit {
   }
 
   showAvailability(): string {
-    if(this.car.available)
-      return "available now!"
-    return "available at: " + new Date(this.car.availableDate).toISOString().slice(0,10);  }
+    return new Date(this.car.availableDate).toISOString().slice(0,10);  }
 
   changeRentPopupState(){
     this.rentPopup = !this.rentPopup
   }
 
   rentCar() {
-    this.carService.rentCar(this.car.registrationNumber, this.rentRequest)
+    this.rentService.rentCar(this.car.registrationNumber, this.rentRequest)
   }
 
   refreshCurrentPrice(){

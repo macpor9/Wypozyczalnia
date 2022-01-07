@@ -10,16 +10,16 @@
   </select>
 
   <div class="field_name">year of production</div>
-  <div class="field_value">
+  <div class="field_value d-flex justify-content-center">
     <input type="number" value="0" [(ngModel)]="searchCriteria.yearOfProductionFrom">
     -
     <input type="number" value="10000" [(ngModel)]="searchCriteria.yearOfProductionTo">
   </div>
   <div class="field_name">price</div>
-  <div class="field_value">
+  <div class="field_value d-flex justify-content-center">
     <input type="number" value="0" [(ngModel)]="searchCriteria.priceFrom">
     -
-    <input type="number" value="10000" [(ngModel)]="searchCriteria.priceTo">
+    <input type="number" [value]="searchCriteria.priceTo" [(ngModel)]="searchCriteria.priceTo">
   </div>
 
   <div class="field_name">Show only available cars</div>
@@ -27,8 +27,15 @@
     <input type="checkbox" checked [(ngModel)]="searchCriteria.available">
   </div>
 
-  <div class="buttonContainer">
-    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="applyFilters()">Apply</span>
+  <div class="field_name">Sort by:</div>
+  <div class="field_value">
+    <select class="field_value" id="sortOptionSelect" [(ngModel)]="sortOption">
+      <option *ngFor="let option of sortOptions" [ngValue]="option" >{{option.name}}</option>
+    </select>
+  </div>
+
+  <div class="buttonContainer d-flex">
+    <span class="btn btn-danger btn-md btn-block waves-effect text-center optionElement " (click)="applyFilters()">Apply</span>
     <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" (click)="resetFilters()">Reset</span>
   </div>
 </section>

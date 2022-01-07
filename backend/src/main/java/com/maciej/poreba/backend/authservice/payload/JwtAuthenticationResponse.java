@@ -1,7 +1,6 @@
 package com.maciej.poreba.backend.authservice.payload;
 
 import lombok.Data;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotNull;

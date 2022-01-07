@@ -8,7 +8,13 @@ export class CarResponse {
   availableDate: Date
 
 
-  constructor(model: string, brand: string, yearOfProduction: Date, price: number, registrationNumber: string, available: boolean, availableDate: Date) {
+  constructor(model: string = "",
+              brand: string = "",
+              yearOfProduction: Date = new Date(),
+              price: number = 0,
+              registrationNumber: string = "",
+              available: boolean = true,
+              availableDate: Date = new Date()) {
     this.model = model;
     this.brand = brand;
     this.yearOfProduction = yearOfProduction;
@@ -17,7 +23,6 @@ export class CarResponse {
     this.available = available;
     this.availableDate = availableDate;
   }
-
 
   toString(){
     return "model: " + this.model + "\n" +

@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from "@angular/core";
+import {Injectable, OnInit, Output} from "@angular/core";
 import {FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser} from "angularx-social-login";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
@@ -15,8 +15,9 @@ export class AuthService implements OnInit {
   socialUser!: SocialUser;
   isLoggedIn: boolean = false;
 
-  message!: string;
+  message!: string
   successful!: boolean;
+  failure!: boolean
 
   HOME_PAGE = Constants.HOME_PAGE
   REGISTER_PAGE = Constants.REGISTER_PAGE
@@ -42,11 +43,13 @@ export class AuthService implements OnInit {
       .toPromise().then(
         data => {
           this.message = data.message
-          this.successful = data.success
+          this.successful = true
+          this.failure = false
         },
         data => {
-          this.message = data.message
+          this.message = "error"
           this.successful = false
+          this.failure = true
         })
   }
 
@@ -57,7 +60,14 @@ export class AuthService implements OnInit {
         this.userService.setAccountData()
           .toPromise()
           .then(e => this.router.navigate([this.HOME_PAGE]))
-      }, e => console.log("error" + e));
+          this.successful = true
+          this.failure = false
+      }, e => {
+        this.successful = false
+        this.failure = true
+        console.log("error" + e)
+        this.message = "error"
+      });
   }
 
   facebookLogin() {

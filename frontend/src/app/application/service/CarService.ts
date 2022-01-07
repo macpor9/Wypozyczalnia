@@ -6,8 +6,8 @@ import {Car} from "../models/Car";
 import {AuthorizationUtil} from "../../utils/AuthorizationUtil";
 import {CarResponse} from "../models/CarResponse";
 import {SearchCriteria} from "../models/SearchCriteria";
-import {from} from "rxjs";
 import {RentRequest} from "../models/RentRequest";
+import {SortCriteria} from "../models/SortCriteria";
 
 
 @Injectable({providedIn: 'root'})
@@ -53,15 +53,23 @@ export class CarService implements OnInit {
 
   }
 
+  getCar(registrationNumber: string){
+    return this.http.get<CarResponse>(environment.apiUrl + Constants.GET_CAR_REQUEST_URL + registrationNumber,
+      {headers: AuthorizationUtil.getJsonHeaders()})
+  }
+
   getPhotoUrl(registrationNumber: string) {
     return this.http.get<string>(environment.apiUrl + Constants.ADD_CAR_PHOTO_REQUEST_URL + registrationNumber,
       {headers: AuthorizationUtil.getJsonHeaders()})
   }
 
-  getSpecificCars(searchCriteria: SearchCriteria, sortField: string, sortMode: string){
+  getSpecificCars(searchCriteria: SearchCriteria, sortCriteria: SortCriteria){
     let params = new HttpParams();
-    params = params.append("field", sortField)
-    params = params.append("mode",sortMode)
+    console.log(sortCriteria)
+    if(sortCriteria.field !== undefined)
+      params = params.append("field", sortCriteria.field)
+    if(sortCriteria.mode !== undefined)
+      params = params.append("mode",sortCriteria.mode)
     return this.http.post<CarResponse[]>(environment.apiUrl + Constants.GET_SPECIFIC_CARS_REQUEST_URL, searchCriteria,
       {headers: AuthorizationUtil.getJsonHeaders(), params: params}).toPromise()
   }

@@ -3,18 +3,39 @@
   <div class="imageContainer col-4">
     <img class="img-responsive center-block" src="{{this.picture}}" width="200" height="200">
   </div>
-  <div class="col-6">
-
-    brand {{car.brand}}<br>
-    model {{car.model}}<br>
-    year of production {{car.yearOfProduction}}<br>
-    price {{car.price}}<br>
-    {{showAvailability()}}
-<!--    {{car}}-->
+  <div class="col-6 car-details">
+    <span class="name">
+      {{car.brand}} {{car.model}}
+    </span>
+    <label>
+      year: <span class="description">
+        {{car.yearOfProduction}}
+      </span>
+    </label>
+    <label>
+      price: <span class="description">
+        {{car.price}}
+    </span>
+    </label>
+    <label *ngIf="!car.available">
+      available at: <span class="description">
+        {{showAvailability()}}
+      </span>
+    </label>
+    <label *ngIf="car.available">
+      <span class="description availability">
+        available!
+      </span>
+    </label>
+    <div *ngIf="car.available && !rentPopup" class="d-flex justify-content-center">
+      <span class="btn btn-md btn-block waves-effect text-center optionElement dropdown-toggle"  (click)="changeRentPopupState()">rent now!</span>
+    </div>
+    <div *ngIf="car.available && rentPopup" class="d-flex justify-content-center dropup">
+      <span class="btn btn-md btn-block waves-effect text-center optionElement dropdown-toggle"(click)="changeRentPopupState()">close</span>
+    </div>
 
   </div>
-  <div class="buttonsContainer col-2">
-    <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement" *ngIf="car.available" (click)="changeRentPopupState()">rent</span>
+  <div class="buttonsContainer col-2 d-flex justify-content-center">
     <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement"
           *ngIf="userService.isAdmin()"
           (click)="openPopup()">
@@ -25,20 +46,33 @@
       remove</span>
   </div>
   <div class="line-separator"></div>
-  <div class="rentContainer col-8" *ngIf="rentPopup">
-    <div class="dateContainer">
-      Reserve your car: <br>
+  <div class="col-4" *ngIf="rentPopup"></div>
+<!--  <div class="rentContainer col-8" *ngIf="rentPopup">-->
+    <div class="dateContainer col-6 car-details" *ngIf="rentPopup">
+      <label>
+        <span class="description">
+        Reserve your car:
+        </span>
+      </label>
       From:
       <input type="date" [(ngModel)]="rentRequest.reservedFrom" (change)="refreshCurrentPrice()">
       To:
       <input type="date" [(ngModel)]="rentRequest.reservedUntil" (change)="refreshCurrentPrice()">
     </div>
-    <div class="buttonsContainer">
+    <div class="buttonsContainer col-2 d-flex justify-content-center" *ngIf="rentPopup">
       <span class="btn btn-primary btn-md btn-block waves-effect text-center optionElement"
             (click)="rentCar()">
         rent</span>
-      Days: {{this.currentRentDays}}<br>
-      Price: {{this.currentPrice}}
+      <label class="d-flex justify-content-center">
+        Days: <span class="description">
+          {{this.currentRentDays}}
+        </span>
+      </label>
+      <label class="d-flex justify-content-center">
+        Price: <span class="description">
+          {{this.currentPrice}}
+        </span>
+      </label>
     </div>
-  </div>
+<!--  </div>-->
 </section>

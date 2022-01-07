@@ -40,6 +40,12 @@
                   class="form-control" name="repeatPassword"
                   placeholder="Repeat password">
               </div>
+              <div class="form-group form-primary success" *ngIf="authService.successful" >
+                <span>{{this.authService.message}}</span>
+              </div>
+              <div class="form-group form-primary failure" *ngIf="authService.failure" >
+                <span>{{this.authService.message}}</span>
+              </div>
               <div class="row d-flex justify-content-center m-b-20">
                 <div class="col-md-12 d-flex justify-content-center d-flex align-items-center">
                   <div class="btn btn-primary btn-md btn-block waves-effect text-center"

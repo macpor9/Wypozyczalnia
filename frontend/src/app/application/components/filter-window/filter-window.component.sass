@@ -5,8 +5,51 @@
   display: flex
   justify-content: center
   align-items: center
-  position: fixed
+  //position: fixed
   margin-left: 2vw
-  border: #151515 solid 10px
+  background: rgb(146,139,254)
+  background: radial-gradient(circle, rgba(146,139,254) 0%, rgba(171,171,251) 33%, rgba(192,227,235) 100%)
+  border: 7px groove rgba(28,110,164,0.52)
+  border-radius: 32px
   flex-direction: column
+
+  select
+    width: 30%
+
+  input[type=number],
+  input[type=text]
+    text-align: center
+    width: 25%
+
+  option
+    text-align: center
+
+  //  chrome
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button
+    -webkit-appearance: none
+    margin: 0
+
+  //  firefox
+  input[type=number]
+    -moz-appearance: textfield
+
+  #sortOptionSelect
+    width: 100%
+    margin-bottom: 1vh
+
+  .field_name
+    font-family: Arial, Helvetica, sans-serif
+    font-size: 21px
+    letter-spacing: -0.6px
+    word-spacing: 0.4px
+    color: #232323
+    font-weight: normal
+    text-decoration: none
+    font-style: normal
+    font-variant: normal
+    text-transform: capitalize
+
+.optionElement
+  margin: 0 20px 0 20px
 
