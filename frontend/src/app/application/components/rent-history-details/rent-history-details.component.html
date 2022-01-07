@@ -1,0 +1,49 @@
+<section class="car row">
+  <div class="imageContainer col-4">
+    <img class="img-responsive center-block" src="{{this.picture}}" width="200" height="200">
+  </div>
+  <div class="col-8 car-details">
+    <div class="title">
+      <span class="name">
+        {{car.brand}} {{car.model}}
+      </span>
+    </div>
+    <div class="details d-flex">
+      <div class="car-description col d-flex">
+        <span class="description">
+          {{car.registrationNumber}}
+        </span>
+        <span class="description">
+          {{car.yearOfProduction}}
+        </span>
+        <label>
+          from:
+          <span class="description">
+            {{getFromString()}}
+          </span>
+        </label>
+        <label>
+          until:
+          <span class="description">
+            {{getUntilString()}}
+          </span>
+        </label>
+      </div>
+      <div class="rent-description col">
+          <span>
+            your reservation lasted:
+          </span>
+          <span class="description">
+            {{getRentDays() + " Days"}}
+          </span>
+          <span>
+            with total price:
+          </span>
+          <span class="description">
+            {{rentHistory.price + " PLN"}}
+          </span>
+
+      </div>
+    </div>
+  </div>
+</section>
