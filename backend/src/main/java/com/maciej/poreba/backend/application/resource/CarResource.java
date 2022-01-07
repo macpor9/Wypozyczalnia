@@ -87,6 +87,14 @@ public class CarResource {
     return ResponseEntity.noContent().build();
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
+  @DeleteMapping("/car/photo/{registrationNumber}")
+  public ResponseEntity<?> deleteFile(@PathVariable @NotEmpty String registrationNumber){
+    log.info("removing car photo + " + registrationNumber);
+    carService.removePhoto(registrationNumber);
+    return ResponseEntity.noContent().build();
+  }
+
   @PostMapping("/car/photo/{registrationNumber}")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile requestFile, @PathVariable("registrationNumber") @NotEmpty String registrationNumber){
@@ -107,6 +115,7 @@ public class CarResource {
     return carService.getPhoto(registrationNumber, response);
 
   }
+
 
 
 }

@@ -71,7 +71,7 @@ public class CarService {
 
   public void updatePhoto(MultipartFile requestFile, String registrationNumber) {
     String path =
-        new StringBuilder().append(FILES_PATH).append(registrationNumber).append(".jpg").toString();
+            FILES_PATH + registrationNumber + ".jpg";
 
     try {
       File myFile = new File(path);
@@ -90,6 +90,7 @@ public class CarService {
       e.printStackTrace();
     }
   }
+
 
   public List<CarResponse> getAllCars() {
     return carRepository
@@ -165,6 +166,26 @@ public class CarService {
     });
   }
 
+  private void renameFile(String oldName, String newName){
+    String oldPath = FILES_PATH + oldName + ".jpg";
+
+    String newPath = FILES_PATH + newName + ".jpg";
+
+
+    File oldFile = new File(oldPath);
+    File newFile = new File(newPath);
+    log.info(oldFile.renameTo(newFile)?"renamed file" + oldName:"file for car not found" + newName);
+
+  }
+
+
+  public void removePhoto(String registrationNumber) {
+    String path =
+            FILES_PATH + registrationNumber + ".jpg";
+    File myFile = new File(path);
+    log.info(myFile.delete()?"deleted file" + registrationNumber:"file for car not found" + registrationNumber);
+  }
+
   private void updateCarData(AddCarRequest addCarRequest, Car car) {
     car.setBrand(MyUtil.returnOrDefault(car.getBrand(), addCarRequest.getBrand()));
     car.setModel(MyUtil.returnOrDefault(car.getModel(), addCarRequest.getModel()));
@@ -222,4 +243,6 @@ public class CarService {
   private boolean isCarAvailableFilter(CarResponse car, SearchCriteria searchCriteria) {
     return !searchCriteria.isAvailable() || car.isAvailable() == searchCriteria.isAvailable();
   }
+
+
 }
