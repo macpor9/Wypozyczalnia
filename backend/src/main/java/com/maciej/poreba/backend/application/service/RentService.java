@@ -57,7 +57,7 @@ public class RentService {
     public List<RentResponse> getUserRentHistory(String email){
         return rentRepository.findByEmail(email)
                 .stream()
-                .map(RentMapper.INSTANCE::rentToRentDto)
+                .map(RentMapper.INSTANCE::rentToRentResponse)
                 .toList();
     }
 

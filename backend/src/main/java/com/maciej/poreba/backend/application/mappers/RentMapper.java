@@ -9,5 +9,5 @@ import org.mapstruct.factory.Mappers;
 public interface RentMapper {
     RentMapper INSTANCE = Mappers.getMapper(RentMapper.class);
 
-    RentResponse rentToRentDto(Rent rent);
+    RentResponse rentToRentResponse(Rent rent);
 }

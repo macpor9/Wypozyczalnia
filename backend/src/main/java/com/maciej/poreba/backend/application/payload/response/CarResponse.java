@@ -21,13 +21,13 @@ public class CarResponse {
    private boolean available;
    private Date availableDate;
 
-   public CarResponse(Car car){
-       this.model = car.getModel();
-       this.brand = car.getBrand();
-       this.yearOfProduction = car.getYearOfProduction();
-       this.price = car.getPrice();
-       this.registrationNumber = car.getRegistrationNumber();
-       this.available = car.isAvailable();
-       this.availableDate = car.getReservedUntil();
-   }
+//   public CarResponse(Car car){
+//       this.model = car.getModel();
+//       this.brand = car.getBrand();
+//       this.yearOfProduction = car.getYearOfProduction();
+//       this.price = car.getPrice();
+//       this.registrationNumber = car.getRegistrationNumber();
+//       this.available = car.isAvailable();
+//       this.availableDate = car.getReservedUntil();
+//   }
 }

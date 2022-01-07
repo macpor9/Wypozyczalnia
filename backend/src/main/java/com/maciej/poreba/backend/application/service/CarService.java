@@ -1,6 +1,7 @@
 package com.maciej.poreba.backend.application.service;
 
 import com.maciej.poreba.backend.application.exception.CarExistsException;
+import com.maciej.poreba.backend.application.mappers.CarMapper;
 import com.maciej.poreba.backend.application.model.Car;
 import com.maciej.poreba.backend.application.model.Rent;
 import com.maciej.poreba.backend.application.payload.request.AddCarRequest;
@@ -91,13 +92,17 @@ public class CarService {
   }
 
   public List<CarResponse> getAllCars() {
-    return carRepository.findAll().stream().map(CarResponse::new).collect(Collectors.toList());
+    return carRepository
+            .findAll()
+            .stream()
+            .map(CarMapper.INSTANCE::carToCarResponse)
+            .collect(Collectors.toList());
   }
 
   public CarResponse getCar(String registrationNumber) {
     return carRepository
         .findByRegistrationNumber(registrationNumber)
-        .map(CarResponse::new)
+        .map(CarMapper.INSTANCE::carToCarResponse)
         .orElseThrow(() -> new ResourceNotFoundException(registrationNumber));
   }
 
@@ -179,13 +184,21 @@ public class CarService {
   public List<CarResponse> getSortedList(String field, String mode) {
     List<CarResponse> carList;
     if (Arrays.asList(sortFields).contains(field)) {
-      carList = carRepository.findAll(Sort.by(field)).stream().map(CarResponse::new).toList();
+      carList = carRepository
+              .findAll(Sort.by(field))
+              .stream()
+              .map(CarMapper.INSTANCE::carToCarResponse)
+              .toList();
 
       if (mode != null && mode.equalsIgnoreCase("DESCENDING")) {
         carList = new ArrayList<>(carList);
         Collections.reverse(carList);
       }
-    } else carList = carRepository.findAll().stream().map(CarResponse::new).toList();
+    } else carList = carRepository
+            .findAll()
+            .stream()
+            .map(CarMapper.INSTANCE::carToCarResponse)
+            .toList();
     return carList;
   }
 
