@@ -21,14 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,6 +71,7 @@ public class CarService {
 
     try {
       File myFile = new File(path);
+      removePhoto(registrationNumber);
       if (!myFile.exists()) myFile.createNewFile();
       FileOutputStream fileOutputStream = new FileOutputStream(myFile, false);
       fileOutputStream.write(requestFile.getBytes());
@@ -120,6 +117,7 @@ public class CarService {
       FileInputStream fileInputStream = new FileInputStream(file);
       response.setContentType(MediaType.IMAGE_PNG_VALUE);
       IOUtils.copy(fileInputStream, response.getOutputStream());
+      fileInputStream.close();
     } catch (IOException e) {
       e.printStackTrace();
       return ResponseEntity.badRequest().body("File not found!");
@@ -132,6 +130,8 @@ public class CarService {
         carRepository
             .findByRegistrationNumber(registrationNumber)
             .orElseThrow(() -> new ResourceNotFoundException(registrationNumber)));
+
+    removePhoto(registrationNumber);
 
     rentRepository.deleteByRegistrationNumber(registrationNumber);
   }
@@ -166,27 +166,31 @@ public class CarService {
     });
   }
 
-  private void renameFile(String oldName, String newName){
-    String oldPath = FILES_PATH + oldName + ".jpg";
+  private void renameCarPhoto(Car car, String newName){
+    String oldPath = FILES_PATH + car.getRegistrationNumber() + ".jpg";
 
     String newPath = FILES_PATH + newName + ".jpg";
-
-
     File oldFile = new File(oldPath);
     File newFile = new File(newPath);
-    log.info(oldFile.renameTo(newFile)?"renamed file" + oldName:"file for car not found" + newName);
-
+    car.setPictureUrl(MyUtil.returnOrDefault(car.getPictureUrl(), newPath));
+    log.info(oldFile.renameTo(newFile)?"renamed file" + car.getRegistrationNumber():"file for car not found" + newName);
   }
 
 
   public void removePhoto(String registrationNumber) {
-    String path =
-            FILES_PATH + registrationNumber + ".jpg";
-    File myFile = new File(path);
-    log.info(myFile.delete()?"deleted file" + registrationNumber:"file for car not found" + registrationNumber);
+    String path = FILES_PATH + registrationNumber + ".jpg";
+    try {
+      RandomAccessFile raf = new RandomAccessFile(new File(path), "rw");
+      raf.close();
+      Files.delete(Path.of(path));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   private void updateCarData(AddCarRequest addCarRequest, Car car) {
+    renameCarPhoto(car,MyUtil.returnOrDefault(car.getRegistrationNumber(), addCarRequest.getRegistrationNumber()));
+//    car.setPictureUrl(MyUtil.returnOrDefault(car.getRegistrationNumber(), addCarRequest.getRegistrationNumber()));
     car.setBrand(MyUtil.returnOrDefault(car.getBrand(), addCarRequest.getBrand()));
     car.setModel(MyUtil.returnOrDefault(car.getModel(), addCarRequest.getModel()));
     car.setYearOfProduction(
