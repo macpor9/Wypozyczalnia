@@ -26,7 +26,8 @@ export class HomeComponent implements OnInit {
   }
 
   deleteCar(car: CarResponse){
-    this.cars = this.cars.filter(function(el) { return el.registrationNumber != car.registrationNumber; });
+    location.reload()
+    // this.cars = this.cars.filter(function(el) { return el.registrationNumber != car.registrationNumber; });
   }
 
   listCars() {

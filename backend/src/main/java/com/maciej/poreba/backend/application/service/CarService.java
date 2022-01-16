@@ -126,14 +126,17 @@ public class CarService {
   }
 
   public void removeCar(String registrationNumber) {
-    carRepository.delete(
-        carRepository
+    Car car = carRepository
             .findByRegistrationNumber(registrationNumber)
-            .orElseThrow(() -> new ResourceNotFoundException(registrationNumber)));
+            .orElseThrow(() -> new ResourceNotFoundException(registrationNumber));
 
-    removePhoto(registrationNumber);
+    if (car.isAvailable()){
+      carRepository.delete(car);
 
-    rentRepository.deleteByRegistrationNumber(registrationNumber);
+      removePhoto(registrationNumber);
+
+      rentRepository.deleteByRegistrationNumber(registrationNumber);
+    }
   }
 
   public void updateCar(AddCarRequest addCarRequest, String registrationNumber) {
