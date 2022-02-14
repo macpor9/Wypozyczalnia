@@ -33,7 +33,7 @@
         <input type="number" [(ngModel)]="car.price">
       </div>
     </div>
-    <form enctype="multipart/form-data" novalidate *ngIf="isInitial() || isSaving() || true">
+    <form enctype="multipart/form-data" novalidate *ngIf="isInitial() || isSaving() || true" class="dropbox-form">
       <h4 class="description uploadTitle">Upload Car Photo</h4>
       <div class="dropbox">
         <input type="file"

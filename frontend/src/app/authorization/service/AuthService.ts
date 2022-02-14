@@ -1,9 +1,8 @@
-import {Injectable, OnInit, Output} from "@angular/core";
+import {Injectable, OnInit} from "@angular/core";
 import {FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser} from "angularx-social-login";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {LoginResponse} from "../models/LoginResponse";
-import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {Constants} from "../../utils/Constants";
 import {RegisterResponse} from "../models/RegisterResponse";
@@ -29,7 +28,8 @@ export class AuthService implements OnInit {
     private http: HttpClient,
     private router: Router,
     private userService: UserService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.socialAuthService.authState.subscribe((user) => {
@@ -60,8 +60,8 @@ export class AuthService implements OnInit {
         this.userService.setAccountData()
           .toPromise()
           .then(e => this.router.navigate([this.HOME_PAGE]))
-          this.successful = true
-          this.failure = false
+        this.successful = true
+        this.failure = false
       }, e => {
         this.successful = false
         this.failure = true
@@ -73,7 +73,7 @@ export class AuthService implements OnInit {
   facebookLogin() {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, {prompt: 'consent'}).then(e => {
       this.http.post<LoginResponse>(environment.apiUrl + FACEBOOK_SIGNIN_URL, {accessToken: e.authToken})
-       .toPromise()
+        .toPromise()
         .then((response) => {
           localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
           this.userService.setAccountData().toPromise().then(e => this.router.navigate([this.HOME_PAGE]))
@@ -82,14 +82,16 @@ export class AuthService implements OnInit {
   }
 
   googleLogin() {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID, {prompt: 'consent'}).then(e => {
-      this.http.post<LoginResponse>(environment.apiUrl + GOOGLE_SIGNIN_URL, {accessToken: e.authToken})
-      .toPromise()
-        .then((response) => {
-          localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
-          this.userService.setAccountData().toPromise().then(e => this.router.navigate([this.HOME_PAGE]))
-        }, e => console.log("error" + e));
-    }, e => console.log(e))
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID, {prompt: 'consent'})
+      .then(e => {
+        this.http.post<LoginResponse>(environment.apiUrl + GOOGLE_SIGNIN_URL, {accessToken: e.authToken})
+          .toPromise()
+          .then((response) => {
+            localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
+            this.userService.setAccountData().toPromise()
+              .then(() => this.router.navigate([this.HOME_PAGE]))
+          });
+      })
   }
 
 

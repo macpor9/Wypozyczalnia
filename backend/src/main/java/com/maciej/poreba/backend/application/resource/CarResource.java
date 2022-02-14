@@ -1,9 +1,9 @@
 package com.maciej.poreba.backend.application.resource;
 
 import com.maciej.poreba.backend.application.model.Car;
-import com.maciej.poreba.backend.application.payload.request.AddCarRequest;
-import com.maciej.poreba.backend.application.payload.request.SearchCriteria;
-import com.maciej.poreba.backend.application.payload.response.CarResponse;
+import com.maciej.poreba.backend.application.dto.request.AddCarRequest;
+import com.maciej.poreba.backend.application.dto.request.SearchCriteria;
+import com.maciej.poreba.backend.application.dto.response.CarResponse;
 import com.maciej.poreba.backend.application.service.CarService;
 import com.maciej.poreba.backend.commons.payload.ApiResponse;
 import lombok.RequiredArgsConstructor;

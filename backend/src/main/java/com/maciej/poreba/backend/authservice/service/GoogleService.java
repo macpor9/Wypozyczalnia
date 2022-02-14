@@ -26,8 +26,8 @@ public class GoogleService {
   private final JwtTokenProvider tokenProvider;
   private final Random random;
 
-  public String loginUser(String fbAccessToken) {
-    GoogleUser googleUser = googleClient.getUser(fbAccessToken);
+  public String loginUser(String accessToken) {
+    GoogleUser googleUser = googleClient.getUser(accessToken);
 
     return userService
         .findByEmail(googleUser.getEmailAddresses().get(0).getEmail())

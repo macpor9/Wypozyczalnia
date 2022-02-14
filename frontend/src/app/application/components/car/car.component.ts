@@ -60,7 +60,8 @@ export class CarComponent implements OnInit {
   }
 
   rentCar() {
-    this.rentService.rentCar(this.car.registrationNumber, this.rentRequest)
+    if (this.rentRequest.reservedUntil > this.rentRequest.reservedFrom)
+      this.rentService.rentCar(this.car.registrationNumber, this.rentRequest)
   }
 
   refreshCurrentPrice(){

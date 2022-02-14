@@ -2,7 +2,6 @@ import { EventEmitter } from '@angular/core';
 import {Component, Input, OnInit, Output} from '@angular/core';
 import {Car} from "../../models/Car";
 import {CarService} from "../../service/CarService";
-import {File} from "@angular/compiler-cli/src/ngtsc/file_system/testing/src/mock_file_system";
 
 @Component({
   selector: 'app-add-car-popup',
@@ -14,8 +13,6 @@ export class AddCarPopupComponent implements OnInit {
   STATUS_SAVING = 1;
   STATUS_SUCCESS = 2;
   STATUS_FAILED = 3;
-
-
 
   @Input()
   updating = false

@@ -1,4 +1,4 @@
-package com.maciej.poreba.backend.application.payload.request;
+package com.maciej.poreba.backend.application.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -4,9 +4,9 @@ import com.maciej.poreba.backend.application.exception.CarExistsException;
 import com.maciej.poreba.backend.application.mappers.CarMapper;
 import com.maciej.poreba.backend.application.model.Car;
 import com.maciej.poreba.backend.application.model.Rent;
-import com.maciej.poreba.backend.application.payload.request.AddCarRequest;
-import com.maciej.poreba.backend.application.payload.request.SearchCriteria;
-import com.maciej.poreba.backend.application.payload.response.CarResponse;
+import com.maciej.poreba.backend.application.dto.request.AddCarRequest;
+import com.maciej.poreba.backend.application.dto.request.SearchCriteria;
+import com.maciej.poreba.backend.application.dto.response.CarResponse;
 import com.maciej.poreba.backend.application.repository.CarRepository;
 import com.maciej.poreba.backend.application.repository.RentRepository;
 import com.maciej.poreba.backend.application.util.MyUtil;
@@ -94,7 +94,7 @@ public class CarService {
             .findAll()
             .stream()
             .map(CarMapper.INSTANCE::carToCarResponse)
-            .collect(Collectors.toList());
+            .toList();
   }
 
   public CarResponse getCar(String registrationNumber) {

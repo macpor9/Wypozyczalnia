@@ -12,7 +12,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 @Log4j2
 public class GoogleClient {
   private static final String GOOGLE_PEOPLE_API_BASE = "https://people.googleapis.com";
@@ -37,3 +36,5 @@ public class GoogleClient {
         .block();
   }
 }
+
+

@@ -4,7 +4,7 @@ import com.maciej.poreba.backend.application.exception.CarNotAvailableForRentExc
 import com.maciej.poreba.backend.application.mappers.RentMapper;
 import com.maciej.poreba.backend.application.model.Car;
 import com.maciej.poreba.backend.application.model.Rent;
-import com.maciej.poreba.backend.application.payload.response.RentResponse;
+import com.maciej.poreba.backend.application.dto.response.RentResponse;
 import com.maciej.poreba.backend.application.repository.CarRepository;
 import com.maciej.poreba.backend.application.repository.RentRepository;
 import com.maciej.poreba.backend.commons.exception.ResourceNotFoundException;

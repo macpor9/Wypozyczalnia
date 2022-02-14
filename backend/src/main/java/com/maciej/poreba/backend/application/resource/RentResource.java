@@ -1,7 +1,7 @@
 package com.maciej.poreba.backend.application.resource;
 
-import com.maciej.poreba.backend.application.payload.request.RentCarRequest;
-import com.maciej.poreba.backend.application.payload.response.RentResponse;
+import com.maciej.poreba.backend.application.dto.request.RentCarRequest;
+import com.maciej.poreba.backend.application.dto.response.RentResponse;
 import com.maciej.poreba.backend.application.service.RentService;
 import com.maciej.poreba.backend.authservice.model.InstaUserDetails;
 import lombok.RequiredArgsConstructor;

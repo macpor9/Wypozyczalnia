@@ -1,7 +1,7 @@
 package com.maciej.poreba.backend.application.mappers;
 
 import com.maciej.poreba.backend.application.model.Rent;
-import com.maciej.poreba.backend.application.payload.response.RentResponse;
+import com.maciej.poreba.backend.application.dto.response.RentResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

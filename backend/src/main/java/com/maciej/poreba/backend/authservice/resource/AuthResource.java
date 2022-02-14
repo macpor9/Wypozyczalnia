@@ -38,7 +38,7 @@ public class AuthResource {
   private final GoogleService googleService;
 
   @PostMapping("/signin")
-  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+  public ResponseEntity<?> authenticateUser(@RequestBody @Valid LoginRequest loginRequest) {
     String token = userService.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
     return ResponseEntity.ok(new JwtAuthenticationResponse(token));
   }

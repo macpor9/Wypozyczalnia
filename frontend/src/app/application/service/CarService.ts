@@ -65,7 +65,6 @@ export class CarService implements OnInit {
 
   getSpecificCars(searchCriteria: SearchCriteria, sortCriteria: SortCriteria){
     let params = new HttpParams();
-    console.log(sortCriteria)
     if(sortCriteria.field !== undefined)
       params = params.append("field", sortCriteria.field)
     if(sortCriteria.mode !== undefined)
